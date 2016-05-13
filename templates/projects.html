@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block title %}Projects{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+    // additional styles specific for this form goes here
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navigation panel">
+    <div><a href="/about.html">About</a></div>
+    <div><a href="music.html">Music</a></div>
+    <div><a href="projects.html">Projects</a></div>
+    <div><a href="research.html">Research</span></a></div>
+    <div><a href="blog.html">Blog</a></div> 
+</nav>
+
+<div class="panel">
+    <div class="content">
+        <h2>Projects</h2>
+        <h3>Game</h3>
+        <p><a href="http://ec2-54-172-189-178.compute-1.amazonaws.com/static/game_01.html">Realtime Multiplayer Game</a></p>
+
+        <div id="footer">{% block footer %}<small>May 2016</small>{% endblock %}</div>
+    </div>
+</div>    
+
+{% endblock %}
