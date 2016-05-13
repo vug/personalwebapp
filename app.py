@@ -3,7 +3,7 @@ import random
 
 from flask import Flask, render_template, redirect, url_for
 
-static_pages = {'projects.html'}
+static_pages = {'about.html', 'projects.html'}
 
 app = Flask(__name__)
 
