@@ -2,10 +2,13 @@ import sys
 import random
 
 from flask import Flask, render_template, redirect, url_for
+from flask.ext.misaka import Misaka, markdown
 
 static_pages = {'about.html', 'projects.html', 'music.html', 'research.html'}
 
 app = Flask(__name__)
+Misaka(app)
+
 
 def rnd_clr():
 	colors = ['#9ad3de', 'rgb(252,123,52)', '#3fb0ac', '#fae596', '#dbe9d8', '#f2efe8', '#fccdd3']
