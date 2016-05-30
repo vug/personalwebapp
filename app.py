@@ -16,14 +16,15 @@ def rnd_clr():
 	return random.choice(colors)
 
 
-@app.route("/<name>")
+@app.route('/<name>')
 def static_page(name):
 	if name in static_pages:
 		return render_template(name, bg_color=rnd_clr())
 	else:
 		return redirect(url_for('index'))
 
-@app.route("/")
+
+@app.route('/')
 def index():
     return render_template('home.html', bg_color=rnd_clr())
 
