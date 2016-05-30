@@ -1,4 +1,5 @@
 import sys
+import os
 import random
 
 from flask import Flask, render_template, redirect, url_for
@@ -25,6 +26,22 @@ def static_page(name):
 @app.route("/")
 def index():
     return render_template('home.html', bg_color=rnd_clr())
+
+
+@app.route('/blog/')
+def blog():
+    post_list = os.listdir('posts')
+    return render_template('blog.html', post_list=post_list)
+
+
+@app.route('/blog/<post>')
+def blog_post(post):
+    with open(os.path.join('posts', post), 'rt') as f:
+        md_text = f.read()
+        html = markdown(md_text, fenced_code=True, math=True)
+    # https://flask-misaka.readthedocs.io/en/latest/
+    # http://misaka.61924.nl/#
+    return render_template('blog.html', post=html)
 
 
 if __name__ == "__main__":
