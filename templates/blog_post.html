@@ -9,12 +9,8 @@
 {% block content %}
 <div class="panel">
     <div class="content">
-    <ul>
-    {% for post_file in post_list %}
-        <li><a href=/blog/{{post_file}}>{{post_file}}</a></li>
-    {% endfor %}
-    </ul>
     {{post}}
+    <small>posted at: {{date}}, tags: {% for tag in tags %} <a href="#">{{tag}}</a>{% endfor %}</small>
     </div>
 </div>
 {% endblock %}
