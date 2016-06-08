@@ -32,7 +32,7 @@ def index():
 @app.route('/blog/')
 def blog():
     post_list = os.listdir('posts')
-    return render_template('blog.html', post_list=post_list)
+    return render_template('blog_list.html', post_list=post_list)
 
 
 @app.route('/blog/<post>')
