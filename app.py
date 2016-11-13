@@ -2,8 +2,8 @@ from datetime import datetime
 import os
 import random
 
-from flask import Flask, render_template, redirect, url_for
-from flask_login import LoginManager, login_required
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, login_required, logout_user, login_user
 from flask_misaka import Misaka, markdown
 from flask_sqlalchemy import SQLAlchemy
 
@@ -102,6 +102,36 @@ def load_user(user_id):
 
     This is a callback function to reload the user object from the user ID stored in the session."""
     return User.query.get(int(user_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return '''
+        <form action="" method="post">
+            <p>email: <input type=text name=email>
+            <p>pass: <input type=password name=password>
+            <p><input type=submit value=Login>
+        </form>
+        '''
+    elif request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+        if user is not None and user.password == password:
+            login_user(user, remember=True)
+            fullname = user.fullname
+            return 'email: {}, fullname: {}'.format(email, fullname)
+        else:
+            flash('Username or Password is invalid', 'error')
+            return redirect(url_for('login'))
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return 'Logged out'
 
 
 @app.route('/admin')
