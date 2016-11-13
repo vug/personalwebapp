@@ -28,9 +28,13 @@ class MyTest(unittest.TestCase):
         with self.get_context():
             db.drop_all()
 
-    def login(self):
+    def login(self, email=None, password=None):
+        if email is None:
+            email = self.test_user_email
+        if password is None:
+            password = self.test_user_password
         rv = self.app.post('/login',
-                           data={'email': self.test_user_email, 'password': self.test_user_password},
+                           data={'email': email, 'password': password},
                            follow_redirects=True)
         return rv
 
