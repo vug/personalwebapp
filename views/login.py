@@ -39,7 +39,7 @@ def login_page():
             return html
         else:
             flash('Username or Password is invalid', 'error')
-            return redirect(url_for('login'))
+            return redirect(url_for('login.login_page'))
 
 
 @login.route("/logout")
