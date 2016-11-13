@@ -108,6 +108,7 @@ def load_user(user_id):
 def login():
     if request.method == 'GET':
         return render_template('login.html')
+
     elif request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -115,7 +116,11 @@ def login():
         if user is not None and user.password == password:
             login_user(user, remember=True)
             fullname = user.fullname
-            return 'Logged in as email: {}, fullname: {}. <a href="/">home</a>'.format(email, fullname)
+            redirect_url = request.args.get('next')
+            html = 'Logged in as email: {}, fullname: {}<br><a href="/">Home</a> '.format(email, fullname)
+            if redirect_url:
+                html += '<a href="{}">Redirect</a>'.format(redirect_url)
+            return html
         else:
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
