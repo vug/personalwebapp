@@ -1,4 +1,5 @@
 Flask
+Flask-Login
 Flask-Misaka
 Flask-Script
 Flask-SQLAlchemy
