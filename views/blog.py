@@ -6,13 +6,16 @@ import os
 from flask import Blueprint, render_template
 from flask_misaka import markdown
 
+from models import Post
+
+
 blog = Blueprint('blog', __name__)
 
 
 @blog.route('/')
 def blog_index():
-    post_list = os.listdir('posts')
-    return render_template('blog_list.html', post_list=post_list)
+    all_posts = Post.query.all()
+    return render_template('blog_list.html', posts=all_posts)
 
 
 @blog.route('/<post>')
