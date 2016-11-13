@@ -1,4 +1,3 @@
-import sys
 import os
 import random
 
@@ -46,10 +45,3 @@ def blog_post(post):
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
     return render_template('blog_post.html', post=html, date=date, tags=tags)
-
-
-if __name__ == "__main__":
-    port = 8000
-    if len(sys.argv) >= 2:
-        port = int(sys.argv[1])
-    app.run(port=port, debug=True)
