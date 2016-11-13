@@ -1,0 +1,28 @@
+from extensions import db
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    content = db.Column(db.Text)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    published_at = db.Column(db.DateTime)
+    edited_at = db.Column(db.DateTime)
+    view_count = db.Column(db.Integer, default=0)
+    status = db.Column(db.Text)
+
+    def __init__(self, title, content, author_id):
+        self.title = title
+        self.content = content
+        self.author_id = author_id
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, unique=True)
+
+
+posts_to_tags = db.Table('posts_to_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
