@@ -93,6 +93,10 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/blog/')
         assert b'blog_posts_list_page' in rv.data
 
+    def test_incorrect_credentials(self):
+        rv = self.login('hacker', '123456')
+        assert b'Username or Password is invalid' in rv.data
+
     def test_anonymous_cannot_visit_admin(self):
         self.logout()
         rv = self.app.get('/admin')
