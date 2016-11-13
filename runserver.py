@@ -1,5 +1,5 @@
 """
-Start the application server via
+Run the application using Flask's simple webserver via
 
 python runserver.py
 
