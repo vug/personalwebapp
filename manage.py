@@ -42,5 +42,20 @@ def gen_secret():
         f.write("SECRET_KEY = '{}'".format(key))
 
 
+@manager.command
+def gen_posts():
+    from models import Post
+    from datetime import datetime
+    Post.__table__.drop()
+
+    post = Post(title='Hello PersonalWebApp', content='This is my first post. Welcome to my site', author_id=2)
+    post.published_at = datetime.utcnow()
+    db.session.add(post)
+    post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
+    post.published_at = datetime.utcnow()
+    db.session.add(post)
+    db.session.commit()
+
+
 if __name__ == '__main__':
     manager.run()
