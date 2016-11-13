@@ -71,6 +71,12 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/noroutewiththisurl')
         assert rv.status_code == 404
 
+    def test_user_model(self):
+        user = self.get_test_user()
+        assert user.is_authenticated()
+        assert user.is_active()
+        assert not user.is_anonymous()
+
     def test_can_access_login_related_pages(self):
         rv = self.app.get('/login')
         assert b'login_page' in rv.data
