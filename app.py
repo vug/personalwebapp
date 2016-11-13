@@ -2,6 +2,7 @@ import os
 import random
 
 from flask import Flask, render_template, redirect, url_for
+from flask_login import LoginManager
 from flask_misaka import Misaka, markdown
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,6 +13,9 @@ Misaka(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 class User(db.Model):
