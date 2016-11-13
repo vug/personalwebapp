@@ -105,9 +105,11 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/admin')
         assert b'admin_page' not in rv.data
 
-    def test_anonymous_visit_to_admin_redirects_to_login(self):
-        rv = self.app.get('/admin', follow_redirects=True)
+    def test_anonymous_visit_to_protected_page_redirects_to_login(self):
+        protected_page = '/admin'
+        rv = self.app.get(protected_page, follow_redirects=True)
         assert b'login_page' in rv.data
+        assert b'Please log in to access this page.' in rv.data
 
     def test_user_can_login(self):
         rv = self.login()
