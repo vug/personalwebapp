@@ -33,7 +33,10 @@ class MyTest(unittest.TestCase):
     def test_can_access_login(self):
         rv = self.app.get('/login')
         assert b'login_page' in rv.data
-        
+
+        rv = self.app.get('/logout')
+        assert b'logout_page' in rv.data
+
     def test_can_access_blog(self):
         rv = self.app.get('/blog/')
         assert b'blog_posts_list_page' in rv.data
