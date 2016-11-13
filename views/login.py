@@ -16,7 +16,10 @@ login_manager.login_view = 'login.login_page'  # redirect to this when arrived a
 def load_user(user_id):
     """Get the User object given the user_id stored in the session.
 
-    This is a callback function to reload the user object from the user ID stored in the session."""
+    This is a callback function to reload the user object from the user ID stored in the session.
+
+    :rtype: User
+    :return: A User if user_id exists, else None."""
     return User.query.get(int(user_id))
 
 
