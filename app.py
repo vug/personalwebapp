@@ -9,6 +9,9 @@ static_pages = {'about.html', 'projects.html', 'music.html', 'research.html'}
 
 app = Flask(__name__)
 Misaka(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 
 def rnd_clr():
