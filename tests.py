@@ -22,6 +22,7 @@ class MyTest(unittest.TestCase):
             db.session.commit()
 
         self.app = app.test_client()
+        self.get_context = app.app_context
 
     def tearDown(self):
         pass
