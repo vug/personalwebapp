@@ -3,7 +3,7 @@ This Blueprint collects the static pages such as main index and about, projects 
 """
 import random
 
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, abort
 
 static_pages = Blueprint('static_pages', __name__)
 
@@ -19,8 +19,7 @@ def rnd_clr():
 def static_page(name):
     if name in pages:
         return render_template(name, bg_color=rnd_clr())
-    else:
-        return redirect(url_for('static_pages.index'))
+    abort(404)
 
 
 @static_pages.route('/')
