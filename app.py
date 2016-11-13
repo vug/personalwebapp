@@ -115,7 +115,7 @@ def login():
         if user is not None and user.password == password:
             login_user(user, remember=True)
             fullname = user.fullname
-            return 'email: {}, fullname: {}'.format(email, fullname)
+            return 'Logged in as email: {}, fullname: {}. <a href="/">home</a>'.format(email, fullname)
         else:
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
