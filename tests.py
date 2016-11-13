@@ -37,6 +37,18 @@ class MyTest(unittest.TestCase):
     def logout(self):
         self.app.get('/logout')
 
+    def get_test_user(self):
+        """Get a user object reconciled with session.
+
+        Any call to an expired model requires database hit. Calls to self.test_user would cause DetachedInstanceError:
+        "Instance <User at ...> is not bound to a Session". Because the session in which test_user was created no
+        longer exists. To continue working with detached object, reconcile it with the current session.
+
+        from: https://flask-webtest.readthedocs.io/
+        """
+        with self.get_context():
+            test_user = db.session.merge(self.test_user)
+            return test_user
 
     def test_can_access_static_pages(self):
         rv = self.app.get('/')
