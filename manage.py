@@ -39,7 +39,7 @@ def gen_secret():
 
     key = binascii.hexlify(os.urandom(24))
     with open('secret.py', 'wt') as f:
-        f.write('SECRET_KEY = {}'.format(key))
+        f.write("SECRET_KEY = '{}'".format(key))
 
 
 if __name__ == '__main__':
