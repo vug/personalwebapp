@@ -2,6 +2,7 @@ import unittest
 
 from factory import create_app
 from extensions import db
+from models import User
 
 
 class MyTest(unittest.TestCase):
@@ -10,9 +11,17 @@ class MyTest(unittest.TestCase):
         config = {'SQLALCHEMY_DATABASE_URI': sqlite_in_memory_uri,
                   'TESTING': True}
         app = create_app(config)
-        self.app = app.test_client()
+
+        self.test_user_email = 'tester@test_users.com'
+        self.test_user_password = 'password'
+
         with app.app_context():
             db.create_all()
+            self.test_user = User(self.test_user_email, self.test_user_password, 'Mr. Tester')
+            db.session.add(self.test_user)
+            db.session.commit()
+
+        self.app = app.test_client()
 
     def tearDown(self):
         pass
