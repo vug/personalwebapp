@@ -1,6 +1,6 @@
 from flask_script import Manager
 
-from app import app, db
+from app import app, db, User
 
 manager = Manager(app)
 
@@ -14,7 +14,7 @@ def create_db():
 @manager.option('--password', help='password of the user')
 @manager.option('--fullname', help='fullname of the user')
 def create_user(email, password, fullname):
-    user = app.User(email, password, fullname)
+    user = User(email, password, fullname)
     db.session.add(user)
     db.session.commit()
     print('New user with email address "{}" has been generated'.format(email))
