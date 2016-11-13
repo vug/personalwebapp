@@ -1,5 +1,4 @@
 import os
-import random
 
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user
@@ -7,8 +6,8 @@ from flask_misaka import markdown
 
 from extensions import login_manager, misaka, db
 from models import User
+from views import static_pages
 
-static_pages = {'about.html', 'projects.html', 'music.html', 'research.html'}
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
@@ -20,23 +19,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'  # redirect to this when arrived a login_required view without logged in
 db.init_app(app)
 
-
-def rnd_clr():
-    colors = ['#9ad3de', 'rgb(252,123,52)', '#3fb0ac', '#fae596', '#dbe9d8', '#f2efe8', '#fccdd3']
-    return random.choice(colors)
-
-
-@app.route('/<name>')
-def static_page(name):
-    if name in static_pages:
-        return render_template(name, bg_color=rnd_clr())
-    else:
-        return redirect(url_for('index'))
-
-
-@app.route('/')
-def index():
-    return render_template('home.html', bg_color=rnd_clr())
+app.register_blueprint(static_pages)
 
 
 @app.route('/blog/')
