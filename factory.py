@@ -8,6 +8,13 @@ from views import static_pages, blog, login, simple_routes
 
 
 def create_app(config=None):
+    """Return a Flask application according to application factory design pattern function.
+
+    Create app object. Configure it. Initialize Flask extensions. Register Blueprints.
+
+    :type config: dict
+    :param config: Additional configuration that'll override default values
+    """
     app = Flask(__name__)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
