@@ -4,16 +4,19 @@ import random
 
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, login_required, logout_user, login_user
-from flask_misaka import Misaka, markdown
+from flask_misaka import markdown
 from flask_sqlalchemy import SQLAlchemy
+
+from extensions import misaka
 
 static_pages = {'about.html', 'projects.html', 'music.html', 'research.html'}
 
 app = Flask(__name__)
-Misaka(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_pyfile('secret.py', silent=True)
+
+misaka.init_app(app)
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
