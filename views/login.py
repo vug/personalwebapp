@@ -46,7 +46,6 @@ def login_page():
 
 
 @login.route("/logout")
-@login_required
 def logout_page():
     logout_user()
     return 'Logged out<br><a href="/">Home</a>'
