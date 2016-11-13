@@ -23,9 +23,6 @@ def blog_post(post_url):
         abort(404)
     md_text = post.content
     html = markdown(md_text, fenced_code=True, math=True)
-    first_three_lines = md_text.split('\n')[:3]
-    title, date, tags = [line.split('(')[1][:-1] for line in first_three_lines]
-    tags = tags.split(',')
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
-    return render_template('blog_post.html', post=html, date=date, tags=tags)
+    return render_template('blog_post.html', post=html, date=post.published_at)
