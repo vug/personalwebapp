@@ -1,8 +1,11 @@
 from flask_script import Manager
 
-from app import app, db, User
+from extensions import db
+from models import User
 
-manager = Manager(app)
+from factory import create_app
+
+manager = Manager(create_app())
 
 
 @manager.command
