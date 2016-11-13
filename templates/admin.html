@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="unittest" content="admin_page">
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+<p>Welcome to admin page. You must be a PersonalWebApp user: {{ current_user }}</p>
+<ul>
+  <li>email {{ current_user.email }}</li>
+  <li>fullname {{ current_user.fullname }}</li>
+</ul>
+<a href="/">Home</a> <a href="/logout">Logout</a>
+</body>
+</html>
