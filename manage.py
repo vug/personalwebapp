@@ -10,6 +10,7 @@ manager = Manager(create_app())
 
 @manager.command
 def create_db():
+    """Create database and its schema."""
     db.create_all()
 
 
@@ -17,6 +18,7 @@ def create_db():
 @manager.option('--password', help='password of the user')
 @manager.option('--fullname', help='fullname of the user')
 def create_user(email, password, fullname):
+    """Insert a new PersonalWebApp User into database."""
     user = User(email, password, fullname)
     db.session.add(user)
     db.session.commit()
