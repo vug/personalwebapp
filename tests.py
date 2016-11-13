@@ -63,7 +63,7 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/projects.html')
         assert b'projects_page' in rv.data
 
-    def test_can_access_login(self):
+    def test_can_access_login_related_pages(self):
         rv = self.app.get('/login')
         assert b'login_page' in rv.data
 
@@ -76,8 +76,21 @@ class MyTest(unittest.TestCase):
 
     def test_anonymous_cannot_visit_admin(self):
         self.logout()
+        rv = self.app.get('/admin')
+        assert b'admin_page' not in rv.data
+
+    def test_anonymous_visit_to_admin_redirects_to_login(self):
         rv = self.app.get('/admin', follow_redirects=True)
         assert b'login_page' in rv.data
+
+    def test_user_can_login(self):
+        rv = self.login()
+        assert b'Logged in as' in rv.data
+
+    def test_user_can_visit_admin(self):
+        self.login()
+        rv = self.app.get('/admin')
+        assert b'admin_page' in rv.data
 
     def test_db_query_on_user(self):
         with self.get_context():
