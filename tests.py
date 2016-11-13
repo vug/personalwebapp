@@ -67,6 +67,10 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/projects.html')
         assert b'projects_page' in rv.data
 
+    def test_attempt_nonexisting_url(self):
+        rv = self.app.get('/noroutewiththisurl')
+        assert rv.status_code == 404
+
     def test_can_access_login_related_pages(self):
         rv = self.app.get('/login')
         assert b'login_page' in rv.data
