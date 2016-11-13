@@ -62,6 +62,11 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/blog/')
         assert b'blog_posts_list_page' in rv.data
 
+    def test_anonymous_cannot_visit_admin(self):
+        self.logout()
+        rv = self.app.get('/admin', follow_redirects=True)
+        assert b'login_page' in rv.data
+
 
 if __name__ == '__main__':
     unittest.main()
