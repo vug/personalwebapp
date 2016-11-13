@@ -1,3 +1,12 @@
+"""
+Start the application server via
+
+python runserver.py
+
+command. Default port is 8000. To set the port indicate it via --port argument
+
+python runserver.py --port 5000
+"""
 import argparse
 
 from factory import create_app
