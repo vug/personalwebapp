@@ -10,7 +10,7 @@ class MyTest(unittest.TestCase):
         config = {'SQLALCHEMY_DATABASE_URI': sqlite_in_memory_uri,
                   'TESTING': True}
         app = create_app(config)
-        self.app = app.test_client()  # type: Flask.flask
+        self.app = app.test_client()
         with app.app_context():
             db.create_all()
 
