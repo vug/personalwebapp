@@ -14,6 +14,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(80))
+    fullname = db.Column(db.String(80), unique=True)
+
+    def __init__(self, email, password, fullname):
+        self.email = email
+        self.password = password
+        self.fullname = fullname
+
+    def __repr__(self):
+        return '<User %r>' % self.email
+
+
 def rnd_clr():
     colors = ['#9ad3de', 'rgb(252,123,52)', '#3fb0ac', '#fae596', '#dbe9d8', '#f2efe8', '#fccdd3']
     return random.choice(colors)
