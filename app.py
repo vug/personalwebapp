@@ -96,6 +96,14 @@ def blog_post(post):
     return render_template('blog_post.html', post=html, date=date, tags=tags)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    """Get the User object given the user_id stored in the session.
+
+    This is a callback function to reload the user object from the user ID stored in the session."""
+    return User.query.get(int(user_id))
+
+
 @app.route('/admin')
 @login_required
 def admin():
