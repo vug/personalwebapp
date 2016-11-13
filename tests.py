@@ -120,6 +120,12 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/admin')
         assert b'admin_page' in rv.data
 
+    def test_protected_page_redirect_appears_after_login(self):
+        protected_page = 'admin'
+        rv = self.login(redirect=protected_page)
+        assert b'Redirect' in rv.data
+        assert 'href="/{}"'.format(protected_page).encode('utf-8') in rv.data
+
     def test_db_query_on_user(self):
         with self.get_context():
             assert self.test_user_email == db.session.query(User).get(1).email
