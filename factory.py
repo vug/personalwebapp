@@ -1,7 +1,7 @@
 from flask import Flask
 
 from extensions import login_manager, misaka, db
-from views import static_pages, blog, login
+from views import static_pages, blog, login, simple_routes
 
 
 def create_app():
@@ -17,5 +17,6 @@ def create_app():
     app.register_blueprint(login)
     app.register_blueprint(static_pages)
     app.register_blueprint(blog, url_prefix='/blog')
+    app.register_blueprint(simple_routes)
 
     return app
