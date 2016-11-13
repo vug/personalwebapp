@@ -1,3 +1,6 @@
+"""
+This Blueprint implements Blog related views.
+"""
 import os
 
 from flask import Blueprint, render_template

@@ -1,3 +1,6 @@
+"""
+Database models for the app.
+"""
 from datetime import datetime
 
 from extensions import db

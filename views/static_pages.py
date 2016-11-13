@@ -1,3 +1,6 @@
+"""
+This Blueprint collects the static pages such as main index and about, projects etc.
+"""
 import random
 
 from flask import Blueprint, render_template, redirect, url_for

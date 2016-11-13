@@ -1,3 +1,9 @@
+"""
+Flask-Script Manager commands to be run from command line. Examples
+
+python manager.py --help
+python manager.py create_db
+"""
 from flask_script import Manager
 
 from extensions import db

@@ -1,3 +1,6 @@
+"""
+This module has create_app function that creates a PersonalWebApp Flask app according to application factory pattern.
+"""
 from flask import Flask
 
 from extensions import login_manager, misaka, db

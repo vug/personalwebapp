@@ -1,3 +1,6 @@
+"""
+This Blueprint collects simple views that does not have their own Blueprint yet.
+"""
 from flask import Blueprint
 from flask_login import login_required
 
