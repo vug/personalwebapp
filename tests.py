@@ -18,8 +18,20 @@ class MyTest(unittest.TestCase):
         pass
 
     def test_index(self):
+        rv = self.app.get('/')
+        assert b'home_page' in rv.data
+
         rv = self.app.get('/about.html')
         assert b'about_page' in rv.data
+
+        rv = self.app.get('/music.html')
+        assert b'music_page' in rv.data
+
+        rv = self.app.get('/projects.html')
+        assert b'projects_page' in rv.data
+
+        rv = self.app.get('/login')
+        assert b'login_page' in rv.data
 
 
 if __name__ == '__main__':
