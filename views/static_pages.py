@@ -17,7 +17,7 @@ def static_page(name):
     if name in pages:
         return render_template(name, bg_color=rnd_clr())
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for('static_pages.index'))
 
 
 @static_pages.route('/')
