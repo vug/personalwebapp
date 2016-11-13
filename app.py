@@ -2,7 +2,7 @@ import os
 import random
 
 from flask import Flask, render_template, redirect, url_for
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required
 from flask_misaka import Misaka, markdown
 from flask_sqlalchemy import SQLAlchemy
 
@@ -68,3 +68,9 @@ def blog_post(post):
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
     return render_template('blog_post.html', post=html, date=date, tags=tags)
+
+
+@app.route('/admin')
+@login_required
+def admin():
+    return 'Welcome to admin page. You must be a PersonalWebApp user.'
