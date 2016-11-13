@@ -107,13 +107,7 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return '''
-        <form action="" method="post">
-            <p>email: <input type=text name=email>
-            <p>pass: <input type=password name=password>
-            <p><input type=submit value=Login>
-        </form>
-        '''
+        return render_template('login.html')
     elif request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
