@@ -25,7 +25,9 @@ class MyTest(unittest.TestCase):
         self.get_context = app.app_context
 
     def tearDown(self):
-        pass
+        with self.get_context():
+            db.drop_all()
+
 
     def test_can_access_static_pages(self):
         rv = self.app.get('/')
