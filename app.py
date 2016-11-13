@@ -5,9 +5,8 @@ import random
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user
 from flask_misaka import markdown
-from flask_sqlalchemy import SQLAlchemy
 
-from extensions import login_manager, misaka
+from extensions import login_manager, misaka, db
 
 static_pages = {'about.html', 'projects.html', 'music.html', 'research.html'}
 
@@ -19,8 +18,7 @@ app.config.from_pyfile('secret.py', silent=True)
 misaka.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'  # redirect to this when arrived a login_required view without logged in
-
-db = SQLAlchemy(app)
+db.init_app(app)
 
 
 class User(db.Model):
