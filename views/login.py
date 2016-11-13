@@ -48,4 +48,4 @@ def login_page():
 @login.route("/logout")
 def logout_page():
     logout_user()
-    return 'Logged out<br><a href="/">Home</a>'
+    return render_template('logout.html')
