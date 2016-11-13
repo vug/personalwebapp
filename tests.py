@@ -79,6 +79,11 @@ class MyTest(unittest.TestCase):
         rv = self.app.get('/admin', follow_redirects=True)
         assert b'login_page' in rv.data
 
+    def test_db_query_on_user(self):
+        with self.get_context():
+            assert self.test_user_email == db.session.query(User).get(1).email
+            assert self.test_user_email == User.query.get(1).email
+
 
 if __name__ == '__main__':
     unittest.main()
