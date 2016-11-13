@@ -130,7 +130,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return 'Logged out'
+    return 'Logged out<br><a href="/">Home</a>'
 
 
 @app.route('/admin')
