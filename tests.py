@@ -77,6 +77,11 @@ class MyTest(unittest.TestCase):
         assert user.is_active()
         assert not user.is_anonymous()
 
+    def test_test_user(self):
+        user = self.get_test_user()
+        assert user.email == self.test_user_email
+        assert user.password == self.test_user_password
+
     def test_can_access_login_related_pages(self):
         rv = self.app.get('/login')
         assert b'login_page' in rv.data
