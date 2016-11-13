@@ -28,6 +28,15 @@ class MyTest(unittest.TestCase):
         with self.get_context():
             db.drop_all()
 
+    def login(self):
+        rv = self.app.post('/login',
+                           data={'email': self.test_user_email, 'password': self.test_user_password},
+                           follow_redirects=True)
+        return rv
+
+    def logout(self):
+        self.app.get('/logout')
+
 
     def test_can_access_static_pages(self):
         rv = self.app.get('/')
