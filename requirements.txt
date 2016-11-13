@@ -1,4 +1,5 @@
 Flask
 Flask-Misaka
+Flask-SQLAlchemy
 gunicorn
 MarkupSafe
