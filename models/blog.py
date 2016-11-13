@@ -6,6 +6,7 @@ class Post(db.Model):
     title = db.Column(db.Text)
     content = db.Column(db.Text)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    url = db.Column(db.Text)
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
@@ -13,6 +14,7 @@ class Post(db.Model):
 
     def __init__(self, title, content, author_id):
         self.title = title
+        self.url = title.lower().replace(' ', '_')
         self.content = content
         self.author_id = author_id
 
