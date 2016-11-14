@@ -44,16 +44,28 @@ def gen_secret():
 
 @manager.command
 def gen_posts():
-    from models import Post
+    from models import Post, Tag, posts_to_tags
     from datetime import datetime
-    Post.__table__.drop()
+    Post.query.delete()
+    Tag.query.delete()
+    db.session.execute(posts_to_tags.delete())
+
+    python, politics, programming, turkish = [Tag(tname) for tname in ['python', 'politics', 'programming', 'turkish']]
+    for tag in [python, politics, programming, turkish]:
+        db.session.add(tag)
 
     post = Post(title='Hello PersonalWebApp', content='This is my first post. Welcome to my site', author_id=2)
     post.published_at = datetime.utcnow()
+    post.tags.append(python)
+    post.tags.append(programming)
     db.session.add(post)
+
     post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
     post.published_at = datetime.utcnow()
+    post.tags.append(python)
+    post.tags.append(politics)
     db.session.add(post)
+
     db.session.commit()
 
 
