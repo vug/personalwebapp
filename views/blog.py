@@ -69,7 +69,7 @@ def new_post():
 def edit_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
     if request.method == 'POST':
-        post.url = make_url_unique(request.form['url'], editing=True)
+        post.url = request.form['url']
         post.title = request.form['title']
         post.content = request.form['content']
         post.edited_at = datetime.utcnow()
@@ -78,21 +78,6 @@ def edit_post(post_id):
         return redirect('/blog/edit/{}'.format(post_id))
     form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state)
     return render_template('blog_edit.html', form=form, post=post)
-
-
-def make_url_unique(url, editing):
-    """Append underscores to URL as necessary until url becomes unique.
-
-    :type url: str
-    :type editing: bool
-    """
-    count_to_be_unique = 1 if editing else 0
-    while True:
-        is_unique = Post.query.filter_by(url=url).count() == count_to_be_unique
-        if is_unique:
-            break
-        url += '_'
-    return url
 
 
 # TODO: implement delete route
