@@ -28,7 +28,8 @@ def blog_post(post_url):
     html = markdown(md_text, fenced_code=True, math=True)
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
-    return render_template('blog_post.html', title=post.title, content=html, date=post.published_at, tags=post.tags)
+    time_str = post.published_at.strftime('%Y-%m-%d %H:%M')
+    return render_template('blog_post.html', title=post.title, content=html, posted_at=time_str, tags=post.tags)
 
 
 @blog.route('/tag/<tag_name>')
