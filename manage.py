@@ -43,7 +43,7 @@ def gen_secret():
 
 
 @manager.command
-def gen_posts():
+def populate_db():
     from models import Post, Tag, posts_to_tags
     from datetime import datetime
     Post.query.delete()
@@ -66,6 +66,11 @@ def gen_posts():
     post.tags.append(politics)
     db.session.add(post)
 
+    db.session.commit()
+
+    from models import User
+    user = User('admin@email.com', 'password', 'Ad Min')
+    db.session.add(user)
     db.session.commit()
 
 
