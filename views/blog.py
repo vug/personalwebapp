@@ -55,12 +55,12 @@ def new_post():
     pass
 
 
-@blog.route('/edit/<post_url>', methods=['GET', 'POST'])
+@blog.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def edit_post(post_url):
+def edit_post(post_id):
     if request.method == 'POST':
         form = BlogEditForm(request.form)
         return 'posted<br>request.form["title"]: {}<br>form.title: {}'.format(request.form['title'], form.title)
-    post = Post.query.filter_by(url=post_url).first()
+    post = Post.query.filter_by(id=post_id).first()
     form = BlogEditForm(title=post.title, content=post.content)
     return render_template('blog_edit.html', form=form, post=post)
