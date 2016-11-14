@@ -56,6 +56,7 @@ class BlogEditForm(Form):
 @login_required
 def new_post():
     post = Post(title='Untitled', content='', author_id=current_user.id)
+    post.url = make_url_unique(post.url)
     db.session.add(post)
     db.session.commit()
     return redirect('/blog/edit/{}'.format(post.id))
