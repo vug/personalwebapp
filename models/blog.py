@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from extensions import db
 
 
@@ -12,6 +14,7 @@ class Post(db.Model):
     content = db.Column(db.Text)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     url = db.Column(db.Text)
+    created_at = db.Column(db.DateTime)
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
@@ -23,6 +26,7 @@ class Post(db.Model):
         self.url = title.lower().replace(' ', '_')
         self.content = content
         self.author_id = author_id
+        self.created_at = datetime.utcnow()
 
 
 class Tag(db.Model):
