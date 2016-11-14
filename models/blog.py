@@ -23,10 +23,13 @@ class Post(db.Model):
 
     def __init__(self, title, content, author_id):
         self.title = title
-        self.url = title.lower().replace(' ', '_')
+        self.set_url_from_title()
         self.content = content
         self.author_id = author_id
         self.created_at = datetime.utcnow()
+
+    def set_url_from_title(self):
+        self.url = self.title.lower().replace(' ', '_')
 
 
 class Tag(db.Model):
