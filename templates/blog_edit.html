@@ -12,6 +12,8 @@
         <form action="/blog/edit/{{post.url}}" method=post>
         {{ form.title.label }}<br>
         {{ form.title | safe }}<br>
+        {{ form.url.label }}<br>
+        {{ form.url | safe }}<br>
         {{ form.content.label }}<br>
         {{ form.content | safe }}<br>
         {{ form.submit }}

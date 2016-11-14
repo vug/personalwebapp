@@ -47,6 +47,7 @@ def blog_tag(tag_name):
 
 class BlogEditForm(Form):
     title = wtforms.StringField('Title', validators=[wtforms.validators.DataRequired()])
+    url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
     submit = wtforms.SubmitField('Save')
 
@@ -68,4 +69,5 @@ def edit_post(post_id):
         return 'posted<br>request.form["title"]: {}<br>form.title: {}'.format(request.form['title'], form.title)
     post = Post.query.filter_by(id=post_id).first()
     form = BlogEditForm(title=post.title, content=post.content)
+    form = BlogEditForm(title=post.title, content=post.content, url=post.url)
     return render_template('blog_edit.html', form=form, post=post)
