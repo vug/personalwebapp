@@ -17,9 +17,7 @@
 	    {% endfor %}
 	    </ul>
 		<h2>Tags</h2>
-		<div>
-			{% for tag in tags %}<a href="#">{{tag}}</a> {% endfor %}
-		</div>
+		<div>{% for tag in tags %}<a href="/blog/tag/{{tag}}">{{tag}}</a> {% endfor %}</div>
     </div>
 </div>
 {% endblock %}
