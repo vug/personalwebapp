@@ -44,6 +44,12 @@ def gen_secret():
 
 @manager.command
 def populate_db():
+    from models import State
+    State.query.delete()
+    db.session.add(State('draft'))
+    db.session.add(State('published'))
+    db.session.commit()
+
     from models import Post, Tag, posts_to_tags
     from datetime import datetime
     Post.query.delete()
@@ -58,6 +64,7 @@ def populate_db():
     post.published_at = datetime.utcnow()
     post.tags.append(python)
     post.tags.append(programming)
+    post.state = 2
     db.session.add(post)
 
     post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
@@ -69,6 +76,7 @@ def populate_db():
     db.session.commit()
 
     from models import User
+    User.query.delete()
     user = User('admin@email.com', 'password', 'Ad Min')
     db.session.add(user)
     db.session.commit()
