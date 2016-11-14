@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block title %}{{tag}}{% endblock %}
+{% block unittestphrase %}blog_tagged_posts{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div class="content">
+    	<h2>Posts tagged with "{{tag}}"</span></h2>
+	    <ul>
+            {% for post in posts %}
+	        <li><a href=/blog/post/{{post.url}}>{{post.title}}</a></li>
+	        {% endfor %}
+	    </ul>
+    </div>
+</div>
+{% endblock %}

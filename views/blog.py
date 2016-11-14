@@ -35,4 +35,4 @@ def blog_post(post_url):
 @blog.route('/tag/<tag_name>')
 def blog_tag(tag_name):
     tag = Tag.query.filter_by(name=tag_name).first()
-    return render_template('blog_list.html', posts=tag.posts)
+    return render_template('blog_tag.html', tag=tag, posts=tag.posts)
