@@ -1,6 +1,11 @@
 from extensions import db
 
 
+posts_to_tags = db.Table('posts_to_tags',
+                         db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+                         db.Column('post_id', db.Integer, db.ForeignKey('post.id')))
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
@@ -11,6 +16,7 @@ class Post(db.Model):
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
     status = db.Column(db.Text)
+    tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('pages', lazy='dynamic'))
 
     def __init__(self, title, content, author_id):
         self.title = title
@@ -23,8 +29,5 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True)
 
-
-posts_to_tags = db.Table('posts_to_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-    db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
-)
+    def __init__(self, name):
+        self.name = name
