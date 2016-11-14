@@ -3,5 +3,6 @@ Flask-Login
 Flask-Misaka
 Flask-Script
 Flask-SQLAlchemy
+Flask-WTF
 gunicorn
 MarkupSafe
