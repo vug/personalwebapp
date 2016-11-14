@@ -29,3 +29,9 @@ def blog_post(post_url):
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
     return render_template('blog_post.html', title=post.title, content=html, date=post.published_at, tags=post.tags)
+
+
+@blog.route('/tag/<tag_name>')
+def blog_tag(tag_name):
+    tag = Tag.query.filter_by(name=tag_name).first()
+    return render_template('blog_list.html', posts=tag.posts)
