@@ -16,9 +16,9 @@
 	    {% for post in posts %}
 			{% if current_user.is_authenticated %}
 				<li>
-					<a href=/blog/post/{{post.url}}>{{post.title}}</a>
-					{% if post.state == 1 %}[Draft]{% endif %}
 					<a href=/blog/edit/{{post.id}}>Edit</a>
+					{% if post.state == 1 %}[Draft]{% endif %}
+					<a href=/blog/post/{{post.url}}>{{post.title}}</a>
 				</li>
 			{% else %}
 				{% if post.state == 2 %}
