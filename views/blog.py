@@ -26,4 +26,4 @@ def blog_post(post_url):
     html = markdown(md_text, fenced_code=True, math=True)
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
-    return render_template('blog_post.html', title=post.title, content=html, date=post.published_at)
+    return render_template('blog_post.html', title=post.title, content=html, date=post.published_at, tags=post.tags)
