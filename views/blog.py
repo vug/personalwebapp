@@ -47,6 +47,14 @@ class BlogEditForm(FlaskForm):
     submit = wtforms.SubmitField('Save')
 
 
+@blog.route('/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    # Create a new post
+    # move to edit of that post
+    pass
+
+
 @blog.route('/edit/<post_url>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_url):
