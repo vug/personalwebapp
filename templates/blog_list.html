@@ -10,9 +10,9 @@
 {% block content %}
 <div class="panel">
     <div class="content">
+		{% if current_user.is_authenticated %}<a href="/blog/new">Create New Post</a>{% endif %}
     	<h2>Posts</h2>
 	    <ul>
-        {% if current_user.is_authenticated %}<li><a href="/blog/new">New Post</a></li>{% endif %}
 	    {% for post in posts %}
 			{% if current_user.is_authenticated %}
 				<li>
