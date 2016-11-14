@@ -51,6 +51,7 @@ class BlogEditForm(Form):
     title = wtforms.StringField('Title', validators=[wtforms.validators.DataRequired()])
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
+    state = wtforms.SelectField('State', choices=[('1', 'draft'), ('2', 'published')])
     submit = wtforms.SubmitField('Save')
 
 
@@ -75,7 +76,7 @@ def edit_post(post_id):
         post.edited_at = datetime.utcnow()
         db.session.commit()
         return redirect('/blog/edit/{}'.format(post_id))
-    form = BlogEditForm(title=post.title, content=post.content, url=post.url)
+    form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state)
     return render_template('blog_edit.html', form=form, post=post)
 
 
