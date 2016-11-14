@@ -16,7 +16,7 @@ blog = Blueprint('blog', __name__)
 @blog.route('/')
 def blog_index():
     all_posts = Post.query.all()
-    all_posts = sorted(all_posts, key=lambda p: p.published_at, reverse=True)
+    all_posts = sorted(all_posts, key=lambda p: p.created_at, reverse=True)
     all_tags = Tag.query.all()
     all_tags = sorted(all_tags, key=lambda t: t.name)
     return render_template('blog_list.html', posts=all_posts, tags=all_tags)
