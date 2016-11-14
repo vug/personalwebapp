@@ -3,6 +3,7 @@ This Blueprint implements Blog related views.
 """
 from flask import Blueprint, render_template, abort
 from flask_misaka import markdown
+from flask_login import login_required
 
 from models import Post, Tag
 
@@ -36,3 +37,10 @@ def blog_post(post_url):
 def blog_tag(tag_name):
     tag = Tag.query.filter_by(name=tag_name).first()
     return render_template('blog_tag.html', tag=tag, posts=tag.posts)
+
+
+@blog.route('/edit/<post_url>')
+@login_required
+def edit_post(post_url):
+    post = Post.query.filter_by(url=post_url).first()
+    return 'Editing {}'.format(post.title)
