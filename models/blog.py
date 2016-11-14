@@ -18,7 +18,7 @@ class Post(db.Model):
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
-    status = db.Column(db.Text)
+    state = db.Column(db.Integer, db.ForeignKey('state.id'))
     tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('posts', lazy='dynamic'))
 
     def __init__(self, title, content, author_id):
@@ -27,6 +27,7 @@ class Post(db.Model):
         self.content = content
         self.author_id = author_id
         self.created_at = datetime.utcnow()
+        self.state = 1
 
     def set_url_from_title(self):
         self.url = self.title.lower().replace(' ', '_')
