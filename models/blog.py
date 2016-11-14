@@ -42,3 +42,14 @@ class Tag(db.Model):
     def __str__(self):
         return self.name
 
+
+class State(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, unique=True)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
