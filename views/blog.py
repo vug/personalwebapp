@@ -32,7 +32,10 @@ def blog_post(post_url):
     html = markdown(md_text, fenced_code=True, math=True)
     # https://flask-misaka.readthedocs.io/en/latest/
     # http://misaka.61924.nl/#
-    time_str = post.published_at.strftime('%Y-%m-%d %H:%M')
+    if post.published_at:
+        time_str = post.published_at.strftime('%Y-%m-%d %H:%M')
+    else:
+        time_str = 'not published yet'
     return render_template('blog_post.html', title=post.title, content=html, posted_at=time_str, tags=post.tags)
 
 
