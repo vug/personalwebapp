@@ -71,3 +71,13 @@ def edit_post(post_id):
     form = BlogEditForm(title=post.title, content=post.content)
     form = BlogEditForm(title=post.title, content=post.content, url=post.url)
     return render_template('blog_edit.html', form=form, post=post)
+
+
+def make_url_unique(url):
+    """Append "_" to URL until no matches are in Post table."""
+    while True:
+        is_unique = Post.query.filter_by(url=url).count() < 2
+        if is_unique:
+            break
+        url += '_'
+    return url
