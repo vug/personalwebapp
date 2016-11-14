@@ -4,7 +4,7 @@ This Blueprint implements Blog related views.
 from flask import Blueprint, render_template, abort, request
 from flask_misaka import markdown
 from flask_login import login_required
-from flask_wtf import FlaskForm
+from flask_wtf import Form
 import wtforms
 
 from models import Post, Tag
@@ -41,7 +41,7 @@ def blog_tag(tag_name):
     return render_template('blog_tag.html', tag=tag, posts=tag.posts)
 
 
-class BlogEditForm(FlaskForm):
+class BlogEditForm(Form):
     title = wtforms.StringField('Title', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
     submit = wtforms.SubmitField('Save')
