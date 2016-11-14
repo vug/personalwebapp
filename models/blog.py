@@ -23,7 +23,7 @@ class Post(db.Model):
 
     def __init__(self, title, content, author_id):
         self.title = title
-        self.set_url_from_title()
+        self.url = 'random_url_' + generate_random_string()
         self.content = content
         self.author_id = author_id
         self.created_at = datetime.utcnow()
@@ -31,6 +31,14 @@ class Post(db.Model):
 
     def set_url_from_title(self):
         self.url = self.title.lower().replace(' ', '_')
+
+
+def generate_random_string(size=32):
+    import random
+    import string
+    choices = string.ascii_letters + string.digits
+    random_characters = [random.choice(choices) for _ in range(size)]
+    return ''.join(random_characters)
 
 
 class Tag(db.Model):
