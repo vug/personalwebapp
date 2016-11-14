@@ -19,7 +19,7 @@ def blog_index():
     return render_template('blog_list.html', posts=all_posts, tags=all_tags)
 
 
-@blog.route('/<post_url>')
+@blog.route('/post/<post_url>')
 def blog_post(post_url):
     post = Post.query.filter_by(url=post_url).first()
     if post is None:
