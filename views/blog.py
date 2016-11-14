@@ -93,3 +93,11 @@ def make_url_unique(url, editing):
             break
         url += '_'
     return url
+
+
+# TODO: implement delete route
+@blog.route('/delete/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def delete_post(post_id):
+    """Delete post with given ID from DB."""
+    pass
