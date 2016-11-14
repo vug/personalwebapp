@@ -16,7 +16,7 @@ class Post(db.Model):
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
     status = db.Column(db.Text)
-    tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('pages', lazy='dynamic'))
+    tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('posts', lazy='dynamic'))
 
     def __init__(self, title, content, author_id):
         self.title = title
