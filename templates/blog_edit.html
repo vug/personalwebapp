@@ -9,7 +9,7 @@
 {% block content %}
 <div class="panel">
     <div class="content">
-        <form action="/blog/edit/{{post.url}}" method=post>
+        <form action="/blog/edit/{{post.id}}" method=post>
         {{ form.title.label }}<br>
         {{ form.title | safe }}<br>
         {{ form.url.label }}<br>
