@@ -74,6 +74,7 @@ def edit_post(post_id):
         post.title = request.form['title']
         post.content = request.form['content']
         post.edited_at = datetime.utcnow()
+        post.state = request.form['state']
         db.session.commit()
         return redirect('/blog/edit/{}'.format(post_id))
     form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state)
