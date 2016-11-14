@@ -1,13 +1,14 @@
 """
 This Blueprint implements Blog related views.
 """
-from flask import Blueprint, render_template, abort, request
+from flask import Blueprint, render_template, abort, request, redirect
 from flask_misaka import markdown
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask_wtf import Form
 import wtforms
 
 from models import Post, Tag
+from extensions import db
 
 
 blog = Blueprint('blog', __name__)
@@ -47,12 +48,13 @@ class BlogEditForm(Form):
     submit = wtforms.SubmitField('Save')
 
 
-@blog.route('/new', methods=['GET', 'POST'])
+@blog.route('/new')
 @login_required
 def new_post():
-    # Create a new post
-    # move to edit of that post
-    pass
+    post = Post(title='Untitled', content='', author_id=current_user.id)
+    db.session.add(post)
+    db.session.commit()
+    return redirect('/blog/edit/{}'.format(post.id))
 
 
 @blog.route('/edit/<int:post_id>', methods=['GET', 'POST'])
