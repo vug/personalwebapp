@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block title %}Editing {{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div class="content">
+        <form action="/blog/edit/{{post.url}}" method=post>
+        {{ form.title.label }}<br>
+        {{ form.title | safe }}<br>
+        {{ form.content.label }}<br>
+        {{ form.content | safe }}<br>
+        {{ form.submit }}
+        </form>
+    </div>
+</div>
+{% endblock %}

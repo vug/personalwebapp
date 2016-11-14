@@ -1,7 +1,7 @@
 """
 This Blueprint implements Blog related views.
 """
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request
 from flask_misaka import markdown
 from flask_login import login_required
 from flask_wtf import FlaskForm
@@ -50,5 +50,9 @@ class BlogEditForm(FlaskForm):
 @blog.route('/edit/<post_url>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_url):
+    if request.method == 'POST':
+        form = BlogEditForm(request.form)
+        return 'posted<br>request.form["title"]: {}<br>form.title: {}'.format(request.form['title'], form.title)
     post = Post.query.filter_by(url=post_url).first()
-    return 'Editing {}'.format(post.title)
+    form = BlogEditForm(title=post.title, content=post.content)
+    return render_template('blog_edit.html', form=form, post=post)
