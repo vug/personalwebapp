@@ -79,12 +79,14 @@ def populate_db():
     post.tags.append(python)
     post.tags.append(programming)
     post.state = 2
+    post.url = 'hello_personal_webapp'
     db.session.add(post)
 
     post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
     post.published_at = datetime.utcnow()
     post.tags.append(python)
     post.tags.append(politics)
+    post.url = 'highlights_from_this_week'
     db.session.add(post)
 
     db.session.commit()
