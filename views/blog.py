@@ -101,6 +101,17 @@ def tag_index():
         all_tags = Tag.query.all()
         response = {tag.id: tag.name for tag in all_tags}
         return json.dumps(response)
+    elif request.method == 'POST':
+        name = request.form['name']
+        tag_with_same_name = Tag.query.filter_by(name=name).first()
+        if tag_with_same_name:
+            return json.dumps({'error': 'duplication'})
+        new_tag = Tag(name=name)
+        db.session.add(new_tag)
+        db.session.commit()
+        response = {'id': new_tag.id, 'name': new_tag.name}
+        return json.dumps(response)
+
 
 @blog.route('/tag/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
 def tag_id(tag_id):
