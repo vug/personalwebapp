@@ -117,27 +117,20 @@ def tag_index():
 
 @blog.route('/tags/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
 def tag_id(tag_id):
+    tag = Tag.query.filter_by(id=tag_id).first()
+    if tag is None:
+        return jsonify(error='id does not exist')
+
     if request.method == 'GET':
-        tag = Tag.query.filter_by(id=tag_id).first()
-        if tag is None:
-            return jsonify(error='id does not exist')
         response = tag.serialize()
         return jsonify(tag=response)
     elif request.method == 'PUT':
         new_name = request.form['name']
-        tag = Tag.query.filter_by(id=tag_id).first()
-        if not tag:
-            return json.dumps({'error': 'id does not exist'})
         tag.name = new_name
         db.session.commit()
         response = {'id': tag.id, 'name': tag.name}
         return json.dumps(response)
     elif request.method == 'DELETE':
-        tag = Tag.query.filter_by(id=tag_id).first()
-        if tag:
-            db.session.delete(tag)
-            db.session.commit()
-            return json.dumps({'success': 'tag {} with id {} has been deleted'.format(tag.name, tag.id)})
-        else:
-            return json.dumps({'error': 'id does not exist'})
-
+        db.session.delete(tag)
+        db.session.commit()
+        return json.dumps({'success': 'tag {} with id {} has been deleted'.format(tag.name, tag.id)})
