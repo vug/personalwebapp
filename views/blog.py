@@ -2,6 +2,7 @@
 This Blueprint implements Blog related views.
 """
 from datetime import datetime
+import json
 
 from flask import Blueprint, render_template, abort, request, redirect
 from flask_misaka import markdown
@@ -92,3 +93,12 @@ def preview_post():
 def delete_post(post_id):
     """Delete post with given ID from DB."""
     pass
+
+
+@blog.route('/tag', methods=['GET', 'POST'])
+def tag_index():
+    if request.method == 'GET':
+        all_tags = Tag.query.all()
+        response = {tag.id: tag.name for tag in all_tags}
+        return json.dumps(response)
+
