@@ -43,6 +43,7 @@ previewButton.addEventListener('click', function() {
   })
   .done(function(response) {
     preview.innerHTML = response;
+    MathJax.Hub.Typeset();
   });
 });
 </script>
