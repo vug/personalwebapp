@@ -42,6 +42,20 @@ def gen_secret():
         f.write("SECRET_KEY = '{}'".format(key))
 
 
+FIRST_POST = '''
+I decided to make a personal website with the goal that it'll help me to organize my mind and collect my projects at a single location. I wanted to have a blog too. It is a productive way of dealing with tough times, provides focus and allows keeping track of self.
+
+I found this as an opportunity (or excuse) to write my own blogging software. At work, I learned much about web development and finally it is time to apply that knowledge to other aspects of my life. ^_^
+
+Writing your own web app just to publish a few blog posts is super unnecessary and looks counter-productive. There are content management systems such as [Wordpress](https://wordpress.org/), [PageKit](https://pagekit.com/) which do the job perfectly. But, I am a theoretical physicist. We are one of the most impractical kind of people out there. I'm totally not surprised with my decision.
+
+I rented an [EC2](https://aws.amazon.com/ec2/) instance on AWS and there I am running a [Flask](http://flask.pocoo.org/) web application.  It doesn't help much about the static parts of the website (about, music etc. sections), actually it makes it harder to serve them. :-) But allows me to dynamically write, store, edit blog posts.
+
+Later I'll go into the details of how different parts are implemented. For now you can just check the source code of the website on its [GitHub repository](https://github.com/vug/personalwebapp).
+
+Hope I'll have enough patience and persistence to write continuously. Laylay...
+'''
+
 @manager.command
 def populate_db():
     from models import State
@@ -60,7 +74,7 @@ def populate_db():
     for tag in [python, politics, programming, turkish]:
         db.session.add(tag)
 
-    post = Post(title='Hello PersonalWebApp', content='This is my first post. Welcome to my site', author_id=2)
+    post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=2)
     post.published_at = datetime.utcnow()
     post.tags.append(python)
     post.tags.append(programming)
