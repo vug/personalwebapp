@@ -6,7 +6,7 @@ from datetime import datetime
 from flask import Blueprint, render_template, abort, request, redirect
 from flask_misaka import markdown
 from flask_login import login_required, current_user
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 import wtforms
 
 from models import Post, Tag
@@ -47,7 +47,7 @@ def blog_tag(tag_name):
     return render_template('blog_tag.html', tag=tag, posts=tag.posts)
 
 
-class BlogEditForm(Form):
+class BlogEditForm(FlaskForm):
     title = wtforms.StringField('Title', validators=[wtforms.validators.DataRequired()])
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
