@@ -125,11 +125,13 @@ def tag_id(tag_id):
         response = tag.serialize()
         return jsonify(tag=response)
     elif request.method == 'PUT':
-        new_name = request.form['name']
+        new_name = request.args.get('name')
+        if new_name is None:
+            return jsonify(error='No name argument provided.')
         tag.name = new_name
         db.session.commit()
-        response = {'id': tag.id, 'name': tag.name}
-        return json.dumps(response)
+        response = tag.serialize()
+        return jsonify(tag=response)
     elif request.method == 'DELETE':
         db.session.delete(tag)
         db.session.commit()
