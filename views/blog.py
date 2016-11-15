@@ -119,3 +119,12 @@ def tag_id(tag_id):
         tag = Tag.query.filter_by(id=tag_id).first()
         response = {'id': tag.id, 'name': tag.name} if tag else {}
         return json.dumps(response)
+    elif request.method == 'PUT':
+        new_name = request.form['name']
+        tag = Tag.query.filter_by(id=tag_id).first()
+        if not tag:
+            return json.dumps({'error': 'id does not exist'})
+        tag.name = new_name
+        db.session.commit()
+        response = {'id': tag.id, 'name': tag.name}
+        return json.dumps(response)
