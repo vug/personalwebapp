@@ -34,6 +34,16 @@
 <script>
 var preview = document.getElementById('preview');
 var previewButton = document.getElementById('preview-button');
-previewButton.addEventListener('click', function() { console.log('Preview Button clicked'); });
+previewButton.addEventListener('click', function() {
+  var markdownText = document.getElementById('content').value;
+  $.ajax({
+    method: 'POST',
+    url: '/blog/preview',
+    data: {markdown: markdownText}
+  })
+  .done(function(response) {
+    preview.innerHTML = response;
+  });
+});
 </script>
 {% endblock %}
