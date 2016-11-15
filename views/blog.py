@@ -135,4 +135,5 @@ def tag_id(tag_id):
     elif request.method == 'DELETE':
         db.session.delete(tag)
         db.session.commit()
-        return json.dumps({'success': 'tag {} with id {} has been deleted'.format(tag.name, tag.id)})
+        response = tag.serialize()
+        return jsonify(tag=response)
