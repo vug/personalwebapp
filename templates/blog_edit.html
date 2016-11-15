@@ -30,4 +30,10 @@
 <div class="panel">
   <div class="content" id="preview"></div>
 </div>
+
+<script>
+var preview = document.getElementById('preview');
+var previewButton = document.getElementById('preview-button');
+previewButton.addEventListener('click', function() { console.log('Preview Button clicked'); });
+</script>
 {% endblock %}
