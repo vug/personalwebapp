@@ -3,6 +3,12 @@
 {% block head %}
 {{ super() }}
 <style type="text/css">
+#url, #title, #content {
+  width: 100%;
+}
+#content {
+  height: 300px;
+}
 </style>
 {% endblock %}
 
@@ -14,8 +20,7 @@
         {{ form.title | safe }}<br>
         {{ form.url.label }}<br>
         {{ form.url | safe }}<br>
-        {{ form.state.label }}<br>
-        {{ form.state | safe }}<br>
+        {{ form.state.label }} {{ form.state | safe }}<br>
         {{ form.content.label }}<br>
         {{ form.content | safe }}<br>
         {{ form.submit }}
