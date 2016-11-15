@@ -128,3 +128,12 @@ def tag_id(tag_id):
         db.session.commit()
         response = {'id': tag.id, 'name': tag.name}
         return json.dumps(response)
+    elif request.method == 'DELETE':
+        tag = Tag.query.filter_by(id=tag_id).first()
+        if tag:
+            db.session.delete(tag)
+            db.session.commit()
+            return json.dumps({'success': 'tag {} with id {} has been deleted'.format(tag.name, tag.id)})
+        else:
+            return json.dumps({'error': 'id does not exist'})
+
