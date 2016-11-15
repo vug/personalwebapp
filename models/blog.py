@@ -51,6 +51,10 @@ class Tag(db.Model):
     def __str__(self):
         return self.name
 
+    def serialize(self):
+        """Return object data in a jsonable format."""
+        return {'id': self.id, 'name': self.name}
+
 
 class State(db.Model):
     id = db.Column(db.Integer, primary_key=True)
