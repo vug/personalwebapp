@@ -117,8 +117,10 @@ def tag_index():
 def tag_id(tag_id):
     if request.method == 'GET':
         tag = Tag.query.filter_by(id=tag_id).first()
-        response = {'id': tag.id, 'name': tag.name} if tag else {}
-        return json.dumps(response)
+        if tag is None:
+            return jsonify(error='id does not exist')
+        response = tag.serialize()
+        return jsonify(tag=response)
     elif request.method == 'PUT':
         new_name = request.form['name']
         tag = Tag.query.filter_by(id=tag_id).first()
