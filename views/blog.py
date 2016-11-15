@@ -95,7 +95,7 @@ def delete_post(post_id):
     pass
 
 
-@blog.route('/tag', methods=['GET', 'POST'])
+@blog.route('/tags', methods=['GET', 'POST'])
 def tag_index():
     if request.method == 'GET':
         all_tags = Tag.query.all()
@@ -113,7 +113,7 @@ def tag_index():
         return json.dumps(response)
 
 
-@blog.route('/tag/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
+@blog.route('/tags/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
 def tag_id(tag_id):
     if request.method == 'GET':
         tag = Tag.query.filter_by(id=tag_id).first()
