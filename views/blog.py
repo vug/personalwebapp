@@ -102,15 +102,17 @@ def tag_index():
         response = [tag.serialize() for tag in all_tags]
         return jsonify(tags=response)
     elif request.method == 'POST':
-        name = request.form['name']
+        name = request.args.get('name')
+        if name is None:
+            return jsonify(error='No name argument provided.')
         tag_with_same_name = Tag.query.filter_by(name=name).first()
         if tag_with_same_name:
-            return json.dumps({'error': 'duplication'})
+            return jsonify(error='duplication')
         new_tag = Tag(name=name)
         db.session.add(new_tag)
         db.session.commit()
-        response = {'id': new_tag.id, 'name': new_tag.name}
-        return json.dumps(response)
+        response = new_tag.serialize()
+        return jsonify(tag=response)
 
 
 @blog.route('/tags/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
