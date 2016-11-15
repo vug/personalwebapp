@@ -102,3 +102,9 @@ def tag_index():
         response = {tag.id: tag.name for tag in all_tags}
         return json.dumps(response)
 
+@blog.route('/tag/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
+def tag_id(tag_id):
+    if request.method == 'GET':
+        tag = Tag.query.filter_by(id=tag_id).first()
+        response = {'id': tag.id, 'name': tag.name} if tag else {}
+        return json.dumps(response)
