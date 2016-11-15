@@ -80,6 +80,12 @@ def edit_post(post_id):
     return render_template('blog_edit.html', form=form, post=post)
 
 
+@blog.route('/preview', methods=['POST'])
+def preview_post():
+    md_text = request.form['markdown']
+    return markdown(md_text, fenced_code=True, math=True)
+
+
 # TODO: implement delete route
 @blog.route('/delete/<int:post_id>', methods=['GET', 'POST'])
 @login_required
