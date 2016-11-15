@@ -4,7 +4,7 @@ This Blueprint implements Blog related views.
 from datetime import datetime
 import json
 
-from flask import Blueprint, render_template, abort, request, redirect
+from flask import Blueprint, render_template, abort, request, redirect, jsonify
 from flask_misaka import markdown
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
@@ -99,8 +99,8 @@ def delete_post(post_id):
 def tag_index():
     if request.method == 'GET':
         all_tags = Tag.query.all()
-        response = {tag.id: tag.name for tag in all_tags}
-        return json.dumps(response)
+        response = [tag.serialize() for tag in all_tags]
+        return jsonify(tags=response)
     elif request.method == 'POST':
         name = request.form['name']
         tag_with_same_name = Tag.query.filter_by(name=name).first()
