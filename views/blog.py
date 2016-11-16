@@ -95,14 +95,16 @@ def delete_post(post_id):
     pass
 
 
+# Tag API
 @blog.route('/tags', methods=['GET', 'POST'])
 def tag_index():
     if request.method == 'GET':
         return get_all_tags()
+
     elif request.method == 'POST':
         name = request.args.get('name')
         if name is None:
-            return jsonify(error='No name argument provided.')
+            return missing_parameter_error('name')
         return create_tag(name)
 
 
@@ -110,17 +112,29 @@ def tag_index():
 def tag_id(tag_id):
     tag = Tag.query.filter_by(id=tag_id).first()
     if tag is None:
-        return jsonify(error='id does not exist')
+        return missing_tag_error(tag_id)
 
     if request.method == 'GET':
         return get_tag(tag)
+
     elif request.method == 'PUT':
         new_name = request.args.get('name')
         if new_name is None:
-            return jsonify(error='No name argument provided.')
+            return missing_parameter_error('name')
         return update_tag(new_name, tag)
+
     elif request.method == 'DELETE':
         return delete_tag(tag)
+
+
+def missing_parameter_error(parameter):
+    response = {'message': 'Missing required parameter', 'parameter': parameter}
+    return jsonify(error=response), 400
+
+
+def missing_tag_error(tag_id):
+    response = {'message': 'Resource not found', 'id': tag_id}
+    return jsonify(error=response), 404
 
 
 def get_all_tags():
