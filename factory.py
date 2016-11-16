@@ -19,6 +19,7 @@ def create_app(config=None):
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # sqlite://<nohostname>/<path>
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config.from_pyfile('secret.py', silent=True)
     if config is not None:
         app.config.update(config)
