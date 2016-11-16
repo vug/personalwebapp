@@ -26,3 +26,10 @@ class TestTagApi(TestBase):
             assert tag is not None
             assert tag.name == 'testtag'
 
+    def test_missing_parameter_when_creating_tag(self):
+        response = self.app.post('/blog/tags?tag=testtag')  # type: flask.Response
+        assert response.status_code == 400
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'error': {'message': 'Missing required parameter', 'parameter': 'name'}}
+
