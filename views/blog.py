@@ -195,3 +195,9 @@ def delete_tag(tag):
     db.session.commit()
     tag_dict = tag.serialize()
     return jsonify(tag=tag_dict), 200
+
+
+@blog.route('/edit_tags')
+def edit_tags():
+    all_tags = Tag.query.order_by(Tag.name).all()
+    return render_template('blog_edit_tags.html', tags=all_tags)

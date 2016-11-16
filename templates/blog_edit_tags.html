@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block title %}Edit Tags{% endblock %}
+{% block unittestphrase %}blog_edit_tags{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div class="content">
+        <ul>
+        {% for tag in tags %}
+        <li>
+            <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
+            <input type="button" value="Rename">
+            <input type="button" value="Delete">
+        </li>
+        {% endfor %}
+        <li><input type="text"> <input type="button" value="Create New Tag"></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
