@@ -41,3 +41,10 @@ class TestTagApi(TestBase):
         data = json.loads(data_str)
         assert data == {'tag': {'name': 'testtag', 'id': 1}}
 
+    def test_missing_tags_when_getting_tag_by_id(self):
+        response = self.app.get('/blog/tags/1')  # type: flask.Response
+        assert response.status_code == 404
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'error': {'message': 'Resource not found', 'id': 1}}
+
