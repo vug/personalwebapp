@@ -62,6 +62,18 @@ class TestTagApi(TestBase):
         assert code == 400
         assert data == {'error': {'parameter': 'name', 'message': 'Missing required parameter'}}
 
+    def test_deleting_tag(self):
+        self.app.post('/blog/tags?name=testtag1')
+        self.app.post('/blog/tags?name=testtag2')
+        response = self.app.delete('/blog/tags/1')  # type: flask.Response
+        code, data = get_status_code_and_data(response)
+        assert code == 200
+        assert data == {'tag': {'id': 1, 'name': 'testtag1'}}
+
+        response = self.app.get('/blog/tags/1')
+        code, data = get_status_code_and_data(response)
+        assert code == 404
+        assert data == {'error': {'id': 1, 'message': 'Resource not found'}}
 
 
 def get_status_code_and_data(response):
