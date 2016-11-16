@@ -55,8 +55,13 @@ class TestTagApi(TestBase):
         assert code == 200
         assert data == {'tag': {'name': 'updatedtag', 'id': 1}}
 
-        # print(response.status_code, data)
-        # print(response.status_code, response.data)
+    def test_missing_parameter_when_updating_tag(self):
+        self.app.post('/blog/tags?name=testtag')
+        response = self.app.put('/blog/tags/1?tag=updatedtag')  # type: flask.Response
+        code, data = get_status_code_and_data(response)
+        assert code == 400
+        assert data == {'error': {'parameter': 'name', 'message': 'Missing required parameter'}}
+
 
 
 def get_status_code_and_data(response):
