@@ -141,7 +141,7 @@ def get_all_tags():
     """Get all tags from Tag table in jsonified form."""
     all_tags = Tag.query.all()
     response = [tag.serialize() for tag in all_tags]
-    return jsonify(tags=response)
+    return jsonify(tags=response), 200
 
 
 def create_tag(name):
@@ -157,7 +157,8 @@ def create_tag(name):
     db.session.add(new_tag)
     db.session.commit()
     response = new_tag.serialize()
-    return jsonify(tag=response)
+    uri = '/blog/tag/{}'.format(new_tag.id)
+    return jsonify(tag=response, uri=uri), 201
 
 
 def get_tag(tag):
@@ -166,7 +167,7 @@ def get_tag(tag):
     :type tag: Tag
     """
     response = tag.serialize()
-    return jsonify(tag=response)
+    return jsonify(tag=response), 200
 
 
 def update_tag(new_name, tag):
@@ -179,7 +180,8 @@ def update_tag(new_name, tag):
     tag.name = new_name
     db.session.commit()
     response = tag.serialize()
-    return jsonify(tag=response)
+    uri = '/blog/tag/{}'.format(tag.id)
+    return jsonify(tag=response, uri=uri), 200
 
 
 def delete_tag(tag):
@@ -191,4 +193,4 @@ def delete_tag(tag):
     db.session.delete(tag)
     db.session.commit()
     response = tag.serialize()
-    return jsonify(tag=response)
+    return jsonify(tag=response), 200
