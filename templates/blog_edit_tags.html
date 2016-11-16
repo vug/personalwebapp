@@ -15,7 +15,7 @@
         <li>
             <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
             <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename(this)">
-            <input type="button" value="Delete">
+            <input type="button" value="Delete" data-id="{{tag.id}}" onclick="delete_tag(this)">
         </li>
         {% endfor %}
         <li><input type="text"> <input type="button" value="Create New Tag"></li>
@@ -31,6 +31,19 @@
 
         $.ajax({
             method: 'PUT',
+            url: url
+        })
+        .done(function(response) {
+            location.reload();
+        });
+    }
+
+    function delete_tag(el) {
+        var id = el.dataset.id;
+        var url = '/blog/tags/' + id;
+
+        $.ajax({
+            method: 'DELETE',
             url: url
         })
         .done(function(response) {
