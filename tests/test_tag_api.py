@@ -48,3 +48,17 @@ class TestTagApi(TestBase):
         data = json.loads(data_str)
         assert data == {'error': {'message': 'Resource not found', 'id': 1}}
 
+    def test_updating_tag(self):
+        self.app.post('/blog/tags?name=testtag')
+        response = self.app.put('/blog/tags/1?name=updatedtag')  # type: flask.Response
+        assert response.status_code == 200
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'tag': {'name': 'updatedtag', 'id': 1}, 'uri': '/blog/tag/1'}
+
+        response = self.app.get('/blog/tags/1')  # type: flask.Response
+        assert response.status_code == 200
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'tag': {'name': 'updatedtag', 'id': 1}}
+
