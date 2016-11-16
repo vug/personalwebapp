@@ -14,7 +14,7 @@
         {% for tag in tags %}
         <li>
             <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
-            <input type="button" value="Rename">
+            <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename(this)">
             <input type="button" value="Delete">
         </li>
         {% endfor %}
@@ -22,4 +22,20 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function rename(el) {
+        var id = el.dataset.id;
+        var name = document.getElementById('tag'+id).value;
+        var url = '/blog/tags/' + id + '?name=' + name;
+
+        $.ajax({
+            method: 'PUT',
+            url: url
+        })
+        .done(function(response) {
+            location.reload();
+        });
+    }
+</script>
 {% endblock %}
