@@ -150,9 +150,10 @@ def create_tag(name):
     :type name: str
     :return: inserted tag in jsonified form
     """
-    tag_with_same_name = Tag.query.filter_by(name=name).first()
-    if tag_with_same_name:
-        return jsonify(error='duplication')
+    tag_with_given_name_exists = Tag.query.filter_by(name=name).first() is not None
+    if tag_with_given_name_exists:
+        response = {'message': 'Tag exists', 'name': name}
+        return jsonify(error=response), 409  # Conflict
     new_tag = Tag(name=name)
     db.session.add(new_tag)
     db.session.commit()
