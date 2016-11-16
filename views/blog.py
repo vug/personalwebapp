@@ -140,8 +140,8 @@ def missing_tag_error(tag_id):
 def get_all_tags():
     """Get all tags from Tag table in jsonified form."""
     all_tags = Tag.query.all()
-    response = [tag.serialize() for tag in all_tags]
-    return jsonify(tags=response), 200
+    all_tag_dicts = [tag.serialize() for tag in all_tags]
+    return jsonify(tags=all_tag_dicts), 200
 
 
 def create_tag(name):
@@ -157,9 +157,9 @@ def create_tag(name):
     new_tag = Tag(name=name)
     db.session.add(new_tag)
     db.session.commit()
-    response = new_tag.serialize()
+    new_tag_dict = new_tag.serialize()
     uri = '/blog/tag/{}'.format(new_tag.id)
-    return jsonify(tag=response, uri=uri), 201
+    return jsonify(tag=new_tag_dict, uri=uri), 201
 
 
 def get_tag(tag):
@@ -167,8 +167,8 @@ def get_tag(tag):
 
     :type tag: Tag
     """
-    response = tag.serialize()
-    return jsonify(tag=response), 200
+    tag_dict = tag.serialize()
+    return jsonify(tag=tag_dict), 200
 
 
 def update_tag(new_name, tag):
@@ -180,9 +180,9 @@ def update_tag(new_name, tag):
     """
     tag.name = new_name
     db.session.commit()
-    response = tag.serialize()
+    tag_dict = tag.serialize()
     uri = '/blog/tag/{}'.format(tag.id)
-    return jsonify(tag=response, uri=uri), 200
+    return jsonify(tag=tag_dict, uri=uri), 200
 
 
 def delete_tag(tag):
@@ -193,5 +193,5 @@ def delete_tag(tag):
     """
     db.session.delete(tag)
     db.session.commit()
-    response = tag.serialize()
-    return jsonify(tag=response), 200
+    tag_dict = tag.serialize()
+    return jsonify(tag=tag_dict), 200
