@@ -14,7 +14,7 @@
         {% for tag in tags %}
         <li>
             <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
-            <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename(this)">
+            <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename_tag(this)">
             <input type="button" value="Delete" data-id="{{tag.id}}" onclick="delete_tag(this)">
         </li>
         {% endfor %}
@@ -24,31 +24,31 @@
 </div>
 
 <script>
-    function rename(el) {
-        var id = el.dataset.id;
-        var name = document.getElementById('tag'+id).value;
-        var url = '/blog/tags/' + id + '?name=' + name;
+function rename_tag(el) {
+    var id = el.dataset.id;
+    var name = document.getElementById('tag'+id).value;
+    var url = '/blog/tags/' + id + '?name=' + name;
 
-        $.ajax({
-            method: 'PUT',
-            url: url
-        })
-        .done(function(response) {
-            location.reload();
-        });
-    }
+    $.ajax({
+        method: 'PUT',
+        url: url
+    })
+    .done(function(response) {
+        location.reload();
+    });
+}
 
-    function delete_tag(el) {
-        var id = el.dataset.id;
-        var url = '/blog/tags/' + id;
+function delete_tag(el) {
+    var id = el.dataset.id;
+    var url = '/blog/tags/' + id;
 
-        $.ajax({
-            method: 'DELETE',
-            url: url
-        })
-        .done(function(response) {
-            location.reload();
-        });
-    }
+    $.ajax({
+        method: 'DELETE',
+        url: url
+    })
+    .done(function(response) {
+        location.reload();
+    });
+}
 </script>
 {% endblock %}
