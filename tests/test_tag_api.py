@@ -3,6 +3,8 @@ import json
 import flask
 
 from .base import TestBase
+from extensions import db
+from models import Tag
 
 
 class TestTagApi(TestBase):
@@ -12,3 +14,15 @@ class TestTagApi(TestBase):
         data_str = response.get_data().decode()
         data = json.loads(data_str)
         assert data == {'tags': []}
+
+    def test_creating_tag(self):
+        response = self.app.post('/blog/tags?name=testtag')  # type: flask.Response
+        assert response.status_code == 201
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'tag': {'name': 'testtag', 'id': 1}, 'uri': '/blog/tag/1'}
+        with self.get_context():
+            tag = Tag.query.filter_by(name='testtag').one()
+            assert tag is not None
+            assert tag.name == 'testtag'
+
