@@ -33,3 +33,11 @@ class TestTagApi(TestBase):
         data = json.loads(data_str)
         assert data == {'error': {'message': 'Missing required parameter', 'parameter': 'name'}}
 
+    def test_getting_tag_by_id(self):
+        self.app.post('/blog/tags?name=testtag')
+        response = self.app.get('/blog/tags/1')  # type: flask.Response
+        assert response.status_code == 200
+        data_str = response.get_data().decode()
+        data = json.loads(data_str)
+        assert data == {'tag': {'name': 'testtag', 'id': 1}}
+
