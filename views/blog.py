@@ -98,21 +98,12 @@ def delete_post(post_id):
 @blog.route('/tags', methods=['GET', 'POST'])
 def tag_index():
     if request.method == 'GET':
-        all_tags = Tag.query.all()
-        response = [tag.serialize() for tag in all_tags]
-        return jsonify(tags=response)
+        return get_all_tags()
     elif request.method == 'POST':
         name = request.args.get('name')
         if name is None:
             return jsonify(error='No name argument provided.')
-        tag_with_same_name = Tag.query.filter_by(name=name).first()
-        if tag_with_same_name:
-            return jsonify(error='duplication')
-        new_tag = Tag(name=name)
-        db.session.add(new_tag)
-        db.session.commit()
-        response = new_tag.serialize()
-        return jsonify(tag=response)
+        return create_tag(name)
 
 
 @blog.route('/tags/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -122,18 +113,68 @@ def tag_id(tag_id):
         return jsonify(error='id does not exist')
 
     if request.method == 'GET':
-        response = tag.serialize()
-        return jsonify(tag=response)
+        return get_tag(tag)
     elif request.method == 'PUT':
         new_name = request.args.get('name')
         if new_name is None:
             return jsonify(error='No name argument provided.')
-        tag.name = new_name
-        db.session.commit()
-        response = tag.serialize()
-        return jsonify(tag=response)
+        return update_tag(new_name, tag)
     elif request.method == 'DELETE':
-        db.session.delete(tag)
-        db.session.commit()
-        response = tag.serialize()
-        return jsonify(tag=response)
+        return delete_tag(tag)
+
+
+def get_all_tags():
+    """Get all tags from Tag table in jsonified form."""
+    all_tags = Tag.query.all()
+    response = [tag.serialize() for tag in all_tags]
+    return jsonify(tags=response)
+
+
+def create_tag(name):
+    """Insert a new tag into Tag table.
+
+    :type name: str
+    :return: inserted tag in jsonified form
+    """
+    tag_with_same_name = Tag.query.filter_by(name=name).first()
+    if tag_with_same_name:
+        return jsonify(error='duplication')
+    new_tag = Tag(name=name)
+    db.session.add(new_tag)
+    db.session.commit()
+    response = new_tag.serialize()
+    return jsonify(tag=response)
+
+
+def get_tag(tag):
+    """Return the jsonified form of tag.
+
+    :type tag: Tag
+    """
+    response = tag.serialize()
+    return jsonify(tag=response)
+
+
+def update_tag(new_name, tag):
+    """Update the tag in Tag table with given new_name.
+
+    :type new_name: str
+    :type tag: Tag
+    :return: updated tag in jsonified form
+    """
+    tag.name = new_name
+    db.session.commit()
+    response = tag.serialize()
+    return jsonify(tag=response)
+
+
+def delete_tag(tag):
+    """Delete tag from Tag table.
+
+    :type tag: Tag
+    :return: deleted tag in jsonified form
+    """
+    db.session.delete(tag)
+    db.session.commit()
+    response = tag.serialize()
+    return jsonify(tag=response)
