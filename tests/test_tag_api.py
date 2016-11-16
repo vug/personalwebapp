@@ -30,6 +30,13 @@ class TestTagApi(TestBase):
         assert code == 400
         assert data == {'error': {'message': 'Missing required parameter', 'parameter': 'name'}}
 
+    def test_duplication_when_creating_tag(self):
+        self.app.post('/blog/tags?name=testtag')
+        response = self.app.post('/blog/tags?name=testtag')  # type: flask.Response
+        code, data = get_status_code_and_data(response)
+        assert code == 409
+        assert data == {'error': {'name': 'testtag', 'message': 'Tag exists'}}
+
     def test_getting_tag_by_id(self):
         self.app.post('/blog/tags?name=testtag')
         response = self.app.get('/blog/tags/1')  # type: flask.Response
