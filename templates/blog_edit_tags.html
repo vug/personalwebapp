@@ -18,7 +18,10 @@
             <input type="button" value="Delete" data-id="{{tag.id}}" onclick="delete_tag(this)">
         </li>
         {% endfor %}
-        <li><input type="text"> <input type="button" value="Create New Tag"></li>
+            <li>
+                <input type="text" id="newtag">
+                <input type="button" value="Create New Tag" onclick="create_tag()">
+            </li>
         </ul>
     </div>
 </div>
@@ -47,6 +50,23 @@ function delete_tag(el) {
         url: url
     })
     .done(function(response) {
+        location.reload();
+    });
+}
+
+function create_tag() {
+    var name = document.getElementById('newtag').value;
+    if (name.length === 0) {
+        return;
+    }
+    var url = '/blog/tags?name=' + name;
+    console.log(url);
+
+    $.ajax({
+        method: 'POST',
+        url: url
+    })
+    .done(function() {
         location.reload();
     });
 }
