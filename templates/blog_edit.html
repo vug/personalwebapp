@@ -15,6 +15,9 @@
 {% block content %}
 <div class="panel">
     <div class="content">
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
         <form action="/blog/edit/{{post.id}}" method=post>
         {{ form.hidden_tag() }}
         {{ form.title.label }}<br>
