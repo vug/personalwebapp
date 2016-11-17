@@ -77,7 +77,7 @@ def populate_db():
     post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=2)
     post.tags.append(python)
     post.tags.append(programming)
-    post.state = 2
+    post.state_id = 2
     post.url = 'hello_personal_webapp'
     db.session.add(post)
 

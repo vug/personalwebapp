@@ -26,7 +26,7 @@ class Post(db.Model):
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
-    state = db.Column(db.Integer, db.ForeignKey('post_state.id'))
+    state_id = db.Column(db.Integer, db.ForeignKey('post_state.id'))
     tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('posts', lazy='dynamic'))
 
     def __init__(self, title, content, author_id):
@@ -35,7 +35,7 @@ class Post(db.Model):
         self.content = content
         self.author_id = author_id
         self.created_at = datetime.utcnow()
-        self.state = 1
+        self.state_id = 1
 
     def render_content(self):
         """Render the content of the post written in markdown to HTML.
