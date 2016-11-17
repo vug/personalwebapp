@@ -71,13 +71,11 @@ def new_post():
 @login_required
 def edit_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    if request.method == 'POST':
-        form2 = BlogEditForm()
-        form2.validate_on_submit()
-        form2.populate_obj(post)
+    form = BlogEditForm(obj=post)
+    if request.method == 'POST' and form.validate_on_submit():
+        form.populate_obj(post)
         db.session.commit()
         return redirect('/blog/edit/{}'.format(post_id))
-    form = BlogEditForm(obj=post)
     return render_template('blog_edit.html', form=form, post=post)
 
 
