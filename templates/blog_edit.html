@@ -18,17 +18,14 @@
         {% for message in get_flashed_messages() %}
             <div class="flash">{{ message }}</div>
         {% endfor %}
+        {% from "_formhelpers.html" import render_field %}
         <form action="/blog/edit/{{post.id}}" method=post>
         {{ form.hidden_tag() }}
-        {{ form.title.label }}<br>
-        {{ form.title | safe }}<br>
-        {{ form.url.label }}<br>
-        {{ form.url | safe }}<br>
-        {{ form.state.label }} {{ form.state | safe }}<br>
-        {{ form.content.label }}<br>
-        {{ form.content | safe }}<br>
-        {{ form.tags.label }}<br>
-        {{ form.tags | safe }}<br>
+        {{ render_field(form.title) }}
+        {{ render_field(form.url) }}
+        {{ render_field(form.state) }}
+        {{ render_field(form.content) }}
+        {{ render_field(form.tags) }}
         {{ form.submit }}<input type="button" value="Delete"> <input type="button" value="Preview" id="preview-button">
         </form>
     </div>
