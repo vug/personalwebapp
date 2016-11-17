@@ -1,9 +1,6 @@
 """
 This Blueprint implements Blog related views.
 """
-from datetime import datetime
-import json
-
 from flask import Blueprint, render_template, abort, request, redirect, jsonify, flash
 from flask_misaka import markdown
 from flask_login import login_required, current_user
