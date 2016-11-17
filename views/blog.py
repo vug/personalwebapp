@@ -53,6 +53,7 @@ class BlogEditForm(FlaskForm):
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
     state = wtforms.SelectField('State', choices=[('1', 'draft'), ('2', 'published')])
+    tags = wtforms.SelectMultipleField('Tags')
     submit = wtforms.SubmitField('Save')
 
 
@@ -77,7 +78,9 @@ def edit_post(post_id):
         post.state = request.form['state']
         db.session.commit()
         return redirect('/blog/edit/{}'.format(post_id))
-    form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state)
+    post_tags = [tag.id for tag in post.tags]
+    form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state, tags=post_tags)
+    form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.order_by('name')]
     return render_template('blog_edit.html', form=form, post=post)
 
 
