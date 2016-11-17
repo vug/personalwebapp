@@ -75,7 +75,6 @@ def populate_db():
         db.session.add(tag)
 
     post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=2)
-    post.published_at = datetime.utcnow()
     post.tags.append(python)
     post.tags.append(programming)
     post.state = 2
@@ -83,7 +82,6 @@ def populate_db():
     db.session.add(post)
 
     post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
-    post.published_at = datetime.utcnow()
     post.tags.append(python)
     post.tags.append(politics)
     post.url = 'highlights_from_this_week'
