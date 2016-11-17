@@ -58,10 +58,10 @@ Hope I'll have enough patience and persistence to write continuously. Laylay...
 
 @manager.command
 def populate_db():
-    from models import State
-    State.query.delete()
-    db.session.add(State('draft'))
-    db.session.add(State('published'))
+    from models import PostState
+    PostState.query.delete()
+    db.session.add(PostState('draft'))
+    db.session.add(PostState('published'))
     db.session.commit()
 
     from models import Post, Tag, posts_to_tags
