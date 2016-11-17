@@ -82,8 +82,9 @@ def edit_post(post_id):
 
 @blog.route('/preview', methods=['POST'])
 def preview_post():
-    md_text = request.form['markdown']
-    return markdown(md_text, fenced_code=True, math=True)
+    markdown_text = request.form.get('markdown', '')
+    html = Post.render_markdown(markdown_text)
+    return html
 
 
 # TODO: implement delete route
