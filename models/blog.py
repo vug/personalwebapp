@@ -11,6 +11,12 @@ posts_to_tags = db.Table('posts_to_tags',
 
 
 class Post(db.Model):
+
+    def render_markdown(markdown_text):
+        """Render markdown_text into HTML with code blocks and math rendering."""
+        html = markdown(markdown_text, fenced_code=True, math=True)
+        return html
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
     content = db.Column(db.Text)
@@ -33,13 +39,9 @@ class Post(db.Model):
 
     def render_content(self):
         """Render the content of the post written in markdown to HTML.
-
-        https://flask-misaka.readthedocs.io/en/latest/
-        http://misaka.61924.nl/#
         :return: html render of markdown
         """
-        html = markdown(self.content, fenced_code=True, math=True)
-        return html
+        return Post.render_markdown(self.content)
 
     def set_url_from_title(self):
         self.url = self.title.lower().replace(' ', '_')
