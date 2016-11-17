@@ -11,13 +11,13 @@
 <div class="panel">
     <div class="content">
         <ul>
-        {% for tag in tags %}
-        <li>
-            <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
-            <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename_tag(this)">
-            <input type="button" value="Delete" data-id="{{tag.id}}" onclick="delete_tag(this)">
-        </li>
-        {% endfor %}
+            {% for tag in tags %}
+            <li>
+                <input type="text" value="{{tag.name}}" id="tag{{tag.id}}">
+                <input type="button" value="Rename" data-id="{{tag.id}}" onclick="rename_tag(this)">
+                <input type="button" value="Delete" data-id="{{tag.id}}" onclick="delete_tag(this)">
+            </li>
+            {% endfor %}
             <li>
                 <input type="text" id="newtag">
                 <input type="button" value="Create New Tag" onclick="create_tag()">
@@ -36,7 +36,7 @@ function rename_tag(el) {
         method: 'PUT',
         url: url
     })
-    .done(function(response) {
+    .done(function() {
         location.reload();
     });
 }
@@ -49,7 +49,7 @@ function delete_tag(el) {
         method: 'DELETE',
         url: url
     })
-    .done(function(response) {
+    .done(function() {
         location.reload();
     });
 }
