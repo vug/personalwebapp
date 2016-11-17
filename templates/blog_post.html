@@ -9,11 +9,12 @@
 {% block content %}
 <div class="panel">
     <div class="content">
-        <h2>{{title}}</h2>
+        <h2>{{post.title}}</h2>
         {{content}}
     <small>
-        posted at: {{posted_at}}<br>
-        tags: {% for tag in tags %}<a href="/blog/tag/{{tag}}">{{tag}}</a> {% endfor %}
+        {% if post.published_at %}published at: {{ post.published_at.strftime('%Y-%m-%d %H:%M') }}{% endif %}
+        {% if post.edited_at %} edited at: {{ post.edited_at.strftime('%Y-%m-%d %H:%M') }}{% endif %}<br>
+        tags: {% for tag in post.tags %}<a href="/blog/tag/{{tag.name}}">{{tag.name}}</a> {% endfor %}
     </small>
     </div>
 </div>
