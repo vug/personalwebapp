@@ -7,7 +7,7 @@ from flask import Blueprint, render_template, abort, request, redirect, jsonify,
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 import wtforms
-from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
 from models import Post, Tag
 from extensions import db
@@ -44,6 +44,8 @@ class BlogEditForm(FlaskForm):
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
     state = wtforms.SelectField('State', choices=[('1', 'draft'), ('2', 'published')])
+    # TODO: switch to QuerySelectField
+    # state = QuerySelectField('State', query_factory=lambda: db.session.query(State))
     tags = QuerySelectMultipleField('Tags', query_factory=lambda: db.session.query(Tag), get_label=lambda tag: tag.name)
     submit = wtforms.SubmitField('Save')
 
