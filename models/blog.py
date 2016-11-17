@@ -73,6 +73,7 @@ class Tag(db.Model):
 class PostState(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True)
+    posts = db.relationship('Post', backref='state', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
