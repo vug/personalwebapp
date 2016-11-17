@@ -71,7 +71,7 @@ def new_post():
 @login_required
 def edit_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    form = BlogEditForm(obj=post)
+    form = BlogEditForm(request.form, post)
     if request.method == 'POST' and form.validate_on_submit():
         form.populate_obj(post)
         db.session.commit()
