@@ -9,6 +9,7 @@ from flask_misaka import markdown
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 import wtforms
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 
 from models import Post, Tag
 from extensions import db
@@ -53,7 +54,7 @@ class BlogEditForm(FlaskForm):
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
     state = wtforms.SelectField('State', choices=[('1', 'draft'), ('2', 'published')])
-    tags = wtforms.SelectMultipleField('Tags')
+    tags = QuerySelectMultipleField('Tags', query_factory=lambda: db.session.query(Tag), get_label=lambda tag: tag.name)
     submit = wtforms.SubmitField('Save')
 
 
@@ -71,16 +72,12 @@ def new_post():
 def edit_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
     if request.method == 'POST':
-        post.url = request.form['url']
-        post.title = request.form['title']
-        post.content = request.form['content']
-        post.edited_at = datetime.utcnow()
-        post.state = request.form['state']
+        form2 = BlogEditForm()
+        form2.validate_on_submit()
+        form2.populate_obj(post)
         db.session.commit()
         return redirect('/blog/edit/{}'.format(post_id))
-    post_tags = [tag.id for tag in post.tags]
-    form = BlogEditForm(title=post.title, content=post.content, url=post.url, state=post.state, tags=post_tags)
-    form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.order_by('name')]
+    form = BlogEditForm(obj=post)
     return render_template('blog_edit.html', form=form, post=post)
 
 
