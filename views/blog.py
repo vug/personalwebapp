@@ -63,9 +63,10 @@ def edit_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
     form = BlogEditForm(request.form, post)
     if request.method == 'POST' and form.validate_on_submit():
-        is_published = post.state == 1 and request.form.get('state', '3') == '2'
-        is_edited = post.state == 2 and request.form.get('state', '3') == '2'
-        is_drafted = post.state == 2 and request.form.get('state', '3') == '1'
+        form_state = PostState.query.filter_by(id=int(request.form.get('state'))).first()
+        is_published = post.state.name == 'draft' and form_state.name == 'published'
+        is_edited = post.state.name == 'published' and form_state.name == 'published'
+        is_drafted = post.state.name == 'published' and form_state.name == 'draft'
         if is_published:
             post.published_at = datetime.utcnow()
         elif is_edited:
