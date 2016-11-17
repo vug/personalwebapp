@@ -20,11 +20,11 @@
 			{% if current_user.is_authenticated %}
 				<li>
 					<a href=/blog/edit/{{post.id}}>Edit</a>
-					{% if post.state_id == 1 %}[Draft]{% endif %}
+					{% if post.state.name == 'draft' %}[Draft]{% endif %}
 					<a href=/blog/post/{{post.url}}>{{post.title}}</a>
 				</li>
 			{% else %}
-				{% if post.state_id == 2 %}
+				{% if post.state.name == 'published' %}
 				<li><a href=/blog/post/{{post.url}}>{{post.title}}</a></li>
 				{% endif %}
 			{% endif %}
