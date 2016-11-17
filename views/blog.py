@@ -4,7 +4,7 @@ This Blueprint implements Blog related views.
 from datetime import datetime
 import json
 
-from flask import Blueprint, render_template, abort, request, redirect, jsonify
+from flask import Blueprint, render_template, abort, request, redirect, jsonify, flash
 from flask_misaka import markdown
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
@@ -75,6 +75,7 @@ def edit_post(post_id):
     if request.method == 'POST' and form.validate_on_submit():
         form.populate_obj(post)
         db.session.commit()
+        flash('(Post saved)')
         return redirect('/blog/edit/{}'.format(post_id))
     return render_template('blog_edit.html', form=form, post=post)
 
