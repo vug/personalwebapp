@@ -74,10 +74,14 @@ def edit_post(post_id):
     if request.method == 'POST' and form.validate_on_submit():
         is_published = post.state == 1 and request.form.get('state', '3') == '2'
         is_edited = post.state == 2 and request.form.get('state', '3') == '2'
+        is_drafted = post.state == 2 and request.form.get('state', '3') == '1'
         if is_published:
             post.published_at = datetime.utcnow()
         elif is_edited:
             post.edited_at = datetime.utcnow()
+        elif is_drafted:
+            post.published_at = None
+            post.edited_at = None
         form.populate_obj(post)
         db.session.commit()
         flash('(Post saved)')
