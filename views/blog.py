@@ -4,7 +4,6 @@ This Blueprint implements Blog related views.
 from datetime import datetime
 
 from flask import Blueprint, render_template, abort, request, redirect, jsonify, flash
-from flask_misaka import markdown
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 import wtforms
@@ -31,11 +30,7 @@ def blog_post(post_url):
     post = Post.query.filter_by(url=post_url).first()
     if post is None:
         abort(404)
-    md_text = post.content
-    html = markdown(md_text, fenced_code=True, math=True)
-    # https://flask-misaka.readthedocs.io/en/latest/
-    # http://misaka.61924.nl/#
-    return render_template('blog_post.html', post=post, content=html)
+    return render_template('blog_post.html', post=post)
 
 
 @blog.route('/tag/<tag_name>')

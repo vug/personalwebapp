@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from flask_misaka import markdown
+
 from extensions import db
 
 
@@ -28,6 +30,16 @@ class Post(db.Model):
         self.author_id = author_id
         self.created_at = datetime.utcnow()
         self.state = 1
+
+    def render_content(self):
+        """Render the content of the post written in markdown to HTML.
+
+        https://flask-misaka.readthedocs.io/en/latest/
+        http://misaka.61924.nl/#
+        :return: html render of markdown
+        """
+        html = markdown(self.content, fenced_code=True, math=True)
+        return html
 
     def set_url_from_title(self):
         self.url = self.title.lower().replace(' ', '_')
