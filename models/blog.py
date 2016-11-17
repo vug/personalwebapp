@@ -5,9 +5,9 @@ from flask_misaka import markdown
 from extensions import db
 
 
-posts_to_tags = db.Table('posts_to_tags',
-                         db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-                         db.Column('post_id', db.Integer, db.ForeignKey('post.id')))
+post_to_tag = db.Table('post_to_tag',
+                       db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+                       db.Column('post_id', db.Integer, db.ForeignKey('post.id')))
 
 
 class Post(db.Model):
@@ -27,7 +27,7 @@ class Post(db.Model):
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
     state_id = db.Column(db.Integer, db.ForeignKey('post_state.id'))
-    tags = db.relationship('Tag', secondary=posts_to_tags, backref=db.backref('posts', lazy='dynamic'))
+    tags = db.relationship('Tag', secondary=post_to_tag, backref=db.backref('posts', lazy='dynamic'))
 
     def __init__(self, title, content, author_id):
         self.title = title
@@ -80,4 +80,3 @@ class PostState(db.Model):
 
     def __str__(self):
         return self.name
-

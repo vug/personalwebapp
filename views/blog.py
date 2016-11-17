@@ -97,7 +97,7 @@ def delete_post(post_id):
 
 # Tag API
 @blog.route('/tags', methods=['GET', 'POST'])
-def tag_index():
+def tags_index():
     if request.method == 'GET':
         return get_all_tags()
 
@@ -109,7 +109,7 @@ def tag_index():
 
 
 @blog.route('/tags/<int:tag_id>', methods=['GET', 'PUT', 'DELETE'])
-def tag_id(tag_id):
+def tags_id(tag_id):
     tag = Tag.query.filter_by(id=tag_id).first()
     if tag is None:
         return missing_tag_error(tag_id)

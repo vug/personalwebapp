@@ -64,11 +64,10 @@ def populate_db():
     db.session.add(PostState('published'))
     db.session.commit()
 
-    from models import Post, Tag, posts_to_tags
-    from datetime import datetime
+    from models import Post, Tag, post_to_tag
     Post.query.delete()
     Tag.query.delete()
-    db.session.execute(posts_to_tags.delete())
+    db.session.execute(post_to_tag.delete())
 
     python, politics, programming, turkish = [Tag(tname) for tname in ['python', 'politics', 'programming', 'turkish']]
     for tag in [python, politics, programming, turkish]:
