@@ -27,7 +27,11 @@
         {{ render_field(form.state) }}
         {{ render_field(form.content) }}
         {{ render_field(form.tags) }}
-        {{ form.submit }}<input type="button" value="Delete"> <input type="button" value="Preview" id="preview-button">
+        {{ form.submit }}<input type="button" value="Preview" id="preview-button">
+        </form>
+        <form action="/blog/delete/{{post.id}}" method=post
+              onsubmit="return confirm('Confirm that you want to delete this post?');">
+          <input type="submit" value="Delete">
         </form>
     </div>
 </div>
