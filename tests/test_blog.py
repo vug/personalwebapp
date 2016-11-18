@@ -5,6 +5,26 @@ from models import Post, Tag
 
 
 class TestBlogPosts(TestBase):
+    def create_tags_posts_login(self):
+        post1 = Post(title='title one', content='content one', author_id=1)
+        post2 = Post(title='title two', content='content two', author_id=1)
+        post3 = Post(title='title three', content='content three', author_id=1)
+        post1.url = 'post_one'
+        post2.url = 'post_two'
+        post3.url = 'post_three'
+        tag_a = Tag(name='tag_a')
+        tag_b = Tag(name='tag_b')
+        post1.tags = [tag_a, tag_b]
+        post2.tags = [tag_a]
+        with self.get_context():
+            db.session.add(tag_a)
+            db.session.add(tag_b)
+            db.session.add(post1)
+            db.session.add(post2)
+            db.session.add(post3)
+            db.session.commit()
+        self.login()
+
     def test_can_access_blog(self):
         rv = self.app.get('/blog/')
         assert b'blog_posts_list_page' in rv.data
@@ -26,21 +46,7 @@ class TestBlogPosts(TestBase):
             assert len(posts) == 1
 
     def test_blog_list_with_posts(self):
-        post1 = Post(title='title one', content='content one', author_id=1)
-        post2 = Post(title='title two', content='content two', author_id=1)
-        post3 = Post(title='title three', content='content three', author_id=1)
-        tag_a = Tag(name='tag_a')
-        tag_b = Tag(name='tag_b')
-        post1.tags = [tag_a, tag_b]
-        post2.tags = [tag_a]
-        with self.get_context():
-            db.session.add(tag_a)
-            db.session.add(tag_b)
-            db.session.add(post1)
-            db.session.add(post2)
-            db.session.add(post3)
-            db.session.commit()
-        self.login()
+        self.create_tags_posts_login()
 
         rv = self.app.get('/blog/')
         html = rv.data.decode()
