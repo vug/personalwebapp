@@ -5,7 +5,7 @@ from models import Post, Tag
 
 
 class TestBlogPosts(TestBase):
-    def create_tags_posts_login(self):
+    def create_tags_posts(self):
         post1 = Post(title='title one', content='content one', author_id=1)
         post2 = Post(title='title two', content='content two', author_id=1)
         post3 = Post(title='title three', content='content three', author_id=1)
@@ -23,7 +23,6 @@ class TestBlogPosts(TestBase):
             db.session.add(post2)
             db.session.add(post3)
             db.session.commit()
-        self.login()
 
     def test_can_access_blog(self):
         rv = self.app.get('/blog/')
@@ -46,7 +45,8 @@ class TestBlogPosts(TestBase):
             assert len(posts) == 1
 
     def test_blog_list_with_posts(self):
-        self.create_tags_posts_login()
+        self.create_tags_posts()
+        self.login()
 
         rv = self.app.get('/blog/')
         html = rv.data.decode()
@@ -65,7 +65,9 @@ class TestBlogPosts(TestBase):
         assert 'tag_b' in html
 
     def test_view_post(self):
-        self.create_tags_posts_login()
+        self.create_tags_posts()
+        self.login()
+
         rv = self.app.get('/blog/post/post_one')
         html = rv.data.decode()
         assert 'blog_view_post' in html
