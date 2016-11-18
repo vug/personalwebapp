@@ -10,7 +10,9 @@ class TestBlogPosts(TestBase):
         post2 = Post(title='title two', content='content two', author_id=1)
         post3 = Post(title='title three', content='content three', author_id=1)
         post1.url = 'post_one'
+        post1.state_id = 2
         post2.url = 'post_two'
+        post2.state_id = 1
         post3.url = 'post_three'
         tag_a = Tag(name='tag_a')
         tag_b = Tag(name='tag_b')
