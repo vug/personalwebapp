@@ -136,5 +136,14 @@ class TestBlogPosts(TestBase):
         self.create_tags_posts()
         self.login()
         rv = self.app.post('/blog/preview', data={'markdown': '[a link](http://www.example.com)'})
-        html = rv.data.decode('utf-8')
+        html = rv.data.decode()
         assert '<p><a href="http://www.example.com">a link</a></p>' in html
+
+    def test_listing_post_with_a_tag(self):
+        self.create_tags_posts()
+        rv = self.app.get('/blog/tag/tag_a')
+        html = rv.data.decode()
+        assert '/blog/post/post_one' in html
+        assert '/blog/post/post_two' in html
+        assert '/blog/post/post_three' not in html
+
