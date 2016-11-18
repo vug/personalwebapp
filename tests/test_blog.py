@@ -46,6 +46,15 @@ class TestBlogPosts(TestBase):
             posts = Post.query.all()
             assert len(posts) == 1
 
+    def test_blog_list_with_posts_anonymous(self):
+        """Test anonymous user does not see draft posts."""
+        self.create_tags_posts()
+        rv = self.app.get('/blog/')
+        html = rv.data.decode()
+
+        assert 'title one' in html
+        assert 'title two' not in html
+
     def test_blog_list_with_posts(self):
         self.create_tags_posts()
         self.login()
