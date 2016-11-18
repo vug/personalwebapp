@@ -132,3 +132,9 @@ class TestBlogPosts(TestBase):
         html = rv.data.decode()
         assert '/blog/edit/1' not in html
 
+    def test_preview(self):
+        self.create_tags_posts()
+        self.login()
+        rv = self.app.post('/blog/preview', data={'markdown': '[a link](http://www.example.com)'})
+        html = rv.data.decode('utf-8')
+        assert '<p><a href="http://www.example.com">a link</a></p>' in html
