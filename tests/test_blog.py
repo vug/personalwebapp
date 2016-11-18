@@ -147,3 +147,13 @@ class TestBlogPosts(TestBase):
         assert '/blog/post/post_two' in html
         assert '/blog/post/post_three' not in html
 
+    def test_edit_tags(self):
+        self.create_tags_posts()
+        self.login()
+        rv = self.app.get('/blog/edit_tags')
+        html = rv.data.decode()
+
+        assert 'blog_edit_tags' in html
+        assert 'tag_a' in html
+        assert 'tag_b' in html
+        print(html)
