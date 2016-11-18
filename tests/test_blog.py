@@ -63,3 +63,12 @@ class TestBlogPosts(TestBase):
         assert '/blog/tag/tag_b' in html
         assert 'tag_a' in html
         assert 'tag_b' in html
+
+    def test_view_post(self):
+        self.create_tags_posts_login()
+        rv = self.app.get('/blog/post/post_one')
+        html = rv.data.decode()
+        assert 'blog_view_post' in html
+        assert 'title one' in html
+        assert 'content one' in html
+
