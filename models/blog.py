@@ -43,9 +43,6 @@ class Post(db.Model):
         """
         return Post.render_markdown(self.content)
 
-    def set_url_from_title(self):
-        self.url = self.title.lower().replace(' ', '_')
-
 
 def generate_random_string(size=32):
     import random
