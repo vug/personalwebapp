@@ -18,6 +18,7 @@ blog = Blueprint('blog', __name__)
 
 @blog.route('/')
 def blog_index():
+    """Render list of all posts. If user is logged in also display links for creating new post and editing posts."""
     all_posts = Post.query.all()
     all_posts = sorted(all_posts, key=lambda p: p.created_at, reverse=True)
     all_tags = Tag.query.all()
@@ -27,19 +28,25 @@ def blog_index():
 
 @blog.route('/post/<post_url>')
 def blog_post(post_url):
+    """Render post of given url."""
     post = Post.query.filter_by(url=post_url).first()
     if post is None:
         abort(404)
     return render_template('blog_post.html', post=post)
 
 
-@blog.route('/tag/<tag_name>')
-def blog_tag(tag_name):
-    tag = Tag.query.filter_by(name=tag_name).first()
-    return render_template('blog_tag.html', tag=tag, posts=tag.posts)
+@blog.route('/new')
+@login_required
+def new_post():
+    """Create a new post in database and redirect to editing that post."""
+    post = Post(title='Untitled', content='', author_id=current_user.id)
+    db.session.add(post)
+    db.session.commit()
+    return redirect('/blog/edit/{}'.format(post.id))
 
 
 class BlogEditForm(FlaskForm):
+    """WTForm to edit a blog post."""
     title = wtforms.StringField('Title', validators=[wtforms.validators.DataRequired()])
     url = wtforms.StringField('Url', validators=[wtforms.validators.DataRequired()])
     content = wtforms.TextAreaField('Content', validators=[wtforms.validators.DataRequired()])
@@ -48,18 +55,10 @@ class BlogEditForm(FlaskForm):
     submit = wtforms.SubmitField('Save')
 
 
-@blog.route('/new')
-@login_required
-def new_post():
-    post = Post(title='Untitled', content='', author_id=current_user.id)
-    db.session.add(post)
-    db.session.commit()
-    return redirect('/blog/edit/{}'.format(post.id))
-
-
 @blog.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
+    """GET shows post's content in a BlogEditForm. Post gets entered information via the Form into post and save."""
     post = Post.query.filter_by(id=post_id).first()
     form = BlogEditForm(request.form, post)
     if request.method == 'POST' and form.validate_on_submit():
@@ -81,13 +80,6 @@ def edit_post(post_id):
     return render_template('blog_edit.html', form=form, post=post)
 
 
-@blog.route('/preview', methods=['POST'])
-def preview_post():
-    markdown_text = request.form.get('markdown', '')
-    html = Post.render_markdown(markdown_text)
-    return html
-
-
 # TODO: implement delete route
 @blog.route('/delete/<int:post_id>', methods=['GET', 'POST'])
 @login_required
@@ -96,7 +88,22 @@ def delete_post(post_id):
     pass
 
 
-# Tag API
+@blog.route('/preview', methods=['POST'])
+def preview_post():
+    """View to return rendered marked into html to be used via an async request."""
+    markdown_text = request.form.get('markdown', '')
+    html = Post.render_markdown(markdown_text)
+    return html
+
+
+@blog.route('/tag/<tag_name>')
+def blog_tag(tag_name):
+    """Render the list of all posts with given tag."""
+    tag = Tag.query.filter_by(name=tag_name).first()
+    return render_template('blog_tag.html', tag=tag, posts=tag.posts)
+
+
+# Tags REST API
 @blog.route('/tags', methods=['GET', 'POST'])
 def tags_index():
     if request.method == 'GET':
