@@ -88,3 +88,40 @@ class TestBlogPosts(TestBase):
     def test_attempt_viewing_non_existing_url(self):
         rv = self.app.get('/blog/post/non_existing_url')
         assert rv.status_code == 404
+
+    def test_edit_post_view(self):
+        self.create_tags_posts()
+        self.login()
+        rv = self.app.get('/blog/edit/1')
+        html = rv.data.decode()
+        assert 'blog_post_edit' in html
+        assert '/blog/post/post_one' in html  # View Post link
+        assert 'value="title one"' in html  # title input text
+        assert 'content one' in html  # text area for content
+        assert 'tag_a' in html and 'tag_b' in html
+
+        with self.get_context():
+            post = Post.query.filter_by(id=2).first()
+            assert post.state.name == 'draft'
+            assert post.published_at is None
+            assert post.edited_at is None
+
+            self.app.post('/blog/edit/2', follow_redirects=True,
+                          data={'title': post.title, 'url': post.url, 'content': post.content, 'state': '2'})
+            assert post.state.name == 'published'
+            assert post.published_at is not None
+            assert post.edited_at is None
+
+            self.app.post('/blog/edit/2', follow_redirects=True,
+                          data={'title': post.title, 'url': post.url, 'content': 'edited content', 'state': '2'})
+            assert post.state.name == 'published'
+            assert post.published_at is not None
+            assert post.edited_at is not None
+            assert post.content == 'edited content'
+
+            self.app.post('/blog/edit/2', follow_redirects=True,
+                          data={'title': post.title, 'url': post.url, 'content': 'edited content', 'state': '1'})
+            assert post.state.name == 'draft'
+            assert post.published_at is None
+            assert post.edited_at is None
+
