@@ -125,3 +125,10 @@ class TestBlogPosts(TestBase):
             assert post.published_at is None
             assert post.edited_at is None
 
+    def test_delete_post(self):
+        self.create_tags_posts()
+        self.login()
+        rv = self.app.post('/blog/delete/1', follow_redirects=True)
+        html = rv.data.decode()
+        assert '/blog/edit/1' not in html
+
