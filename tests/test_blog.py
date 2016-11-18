@@ -72,3 +72,6 @@ class TestBlogPosts(TestBase):
         assert 'title one' in html
         assert 'content one' in html
 
+    def test_attempt_viewing_non_existing_url(self):
+        rv = self.app.get('/blog/posts/non_existing_url')
+        assert rv.status_code == 404
