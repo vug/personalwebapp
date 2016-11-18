@@ -106,6 +106,7 @@ def blog_tag(tag_name):
 
 
 @blog.route('/edit_tags')
+@login_required
 def edit_tags():
     all_tags = Tag.query.order_by(Tag.name).all()
     return render_template('blog_edit_tags.html', tags=all_tags)
