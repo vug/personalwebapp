@@ -9,7 +9,8 @@ class TestBase(unittest.TestCase):
     def setUp(self):
         sqlite_in_memory_uri = 'sqlite://'
         config = {'SQLALCHEMY_DATABASE_URI': sqlite_in_memory_uri,
-                  'TESTING': True}
+                  'TESTING': True,
+                  'WTF_CSRF_ENABLED': False}
         app = create_app(config)
 
         self.test_user_email = 'tester@test_users.com'
