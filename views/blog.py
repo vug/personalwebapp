@@ -80,12 +80,15 @@ def edit_post(post_id):
     return render_template('blog_edit.html', form=form, post=post)
 
 
-# TODO: implement delete route
-@blog.route('/delete/<int:post_id>', methods=['GET', 'POST'])
+@blog.route('/delete/<int:post_id>', methods=['POST'])
 @login_required
 def delete_post(post_id):
     """Delete post with given ID from DB."""
-    pass
+    post = Post.query.filter_by(id=post_id).first()
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+    return redirect('/blog')
 
 
 @blog.route('/preview', methods=['POST'])
