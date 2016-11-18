@@ -4,7 +4,7 @@ This module has create_app function that creates a PersonalWebApp Flask app acco
 from flask import Flask
 
 from extensions import login_manager, misaka, db
-from views import static_pages, blog, login, simple_routes
+from views import static_pages, blog, login, simple_routes, tags_api
 
 
 def create_app(config=None):
@@ -32,5 +32,6 @@ def create_app(config=None):
     app.register_blueprint(static_pages)
     app.register_blueprint(blog, url_prefix='/blog')
     app.register_blueprint(simple_routes)
+    app.register_blueprint(tags_api, url_prefix='/blog')
 
     return app
