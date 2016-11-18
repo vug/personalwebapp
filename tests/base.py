@@ -2,7 +2,7 @@ import unittest
 
 from factory import create_app
 from extensions import db
-from models import User
+from models import User, PostState
 
 
 class TestBase(unittest.TestCase):
@@ -19,6 +19,8 @@ class TestBase(unittest.TestCase):
             db.create_all()
             self.test_user = User(self.test_user_email, self.test_user_password, 'Mr. Tester')
             db.session.add(self.test_user)
+            db.session.add(PostState(name='draft'))
+            db.session.add(PostState(name='published'))
             db.session.commit()
 
         self.app = app.test_client()
