@@ -14,7 +14,8 @@
         {{ post.render_content() }}
     <small>
         {% if post.published_at %}published at: {{ (post.published_at + tz_diff).strftime('%Y-%m-%d %H:%M') }}{% endif %}
-        {% if post.edited_at %} edited at: {{ (post.edited_at + tz_diff).strftime('%Y-%m-%d %H:%M') }}{% endif %}<br>
+        {% if post.edited_at %} edited at: {{ (post.edited_at + tz_diff).strftime('%Y-%m-%d %H:%M') }}{% endif %}
+        {% if post.published_at or post.edited_at %}UTC{{post.timezone}}{% endif %}<br>
         tags: {% for tag in post.tags %}<a href="/blog/tag/{{tag.name}}">{{tag.name}}</a> {% endfor %}
     </small>
     </div>
