@@ -82,7 +82,7 @@ def populate_db():
     personalwebapp = Tag(name='personalwebapp')
     db.session.add(personalwebapp)
 
-    post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=1)
+    post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=1, timezone=-5)
     post.tags.append(personalwebapp)
     post.state_id = 2
     from datetime import datetime
