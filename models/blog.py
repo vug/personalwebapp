@@ -25,7 +25,6 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime)
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
-    view_count = db.Column(db.Integer, default=0)
     timezone = db.Column(db.Integer, default=0)
     state_id = db.Column(db.Integer, db.ForeignKey('post_state.id'))
     tags = db.relationship('Tag', secondary=post_to_tag, backref=db.backref('posts', lazy='dynamic'))
