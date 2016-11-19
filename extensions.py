@@ -7,4 +7,4 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-misaka = Misaka()
+misaka = Misaka(fenced_code=True)  # Set options here https://flask-misaka.readthedocs.io
