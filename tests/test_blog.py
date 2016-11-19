@@ -156,4 +156,3 @@ class TestBlogPosts(TestBase):
         assert 'blog_edit_tags' in html
         assert 'tag_a' in html
         assert 'tag_b' in html
-        print(html)
