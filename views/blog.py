@@ -39,7 +39,7 @@ def blog_post(post_url):
 @login_required
 def new_post():
     """Create a new post in database and redirect to editing that post."""
-    post = Post(title='Untitled', content='', author_id=current_user.id)
+    post = Post(title='Untitled', content='', author_id=current_user.id, timezone=current_user.timezone)
     db.session.add(post)
     db.session.commit()
     return redirect('/blog/edit/{}'.format(post.id))
