@@ -3,8 +3,6 @@ Blog related database models such as Post, Tag, PostState.
 """
 from datetime import datetime
 
-from flask_misaka import markdown
-
 from extensions import db
 
 
