@@ -15,23 +15,6 @@ manager = Manager(create_app())
 
 
 @manager.command
-def create_db():
-    """Create database and its schema."""
-    db.create_all()
-
-
-@manager.option('--email', help='email of the user')
-@manager.option('--password', help='password of the user')
-@manager.option('--fullname', help='fullname of the user')
-def create_user(email, password, fullname):
-    """Insert a new PersonalWebApp User into database."""
-    user = User(email, password, fullname)
-    db.session.add(user)
-    db.session.commit()
-    print('New user with email address "{}" has been generated'.format(email))
-
-
-@manager.command
 def gen_secret():
     """Generate a secret_key for Flask-Login security and write it into secret.py."""
     import os
@@ -40,6 +23,34 @@ def gen_secret():
     key = binascii.hexlify(os.urandom(24))
     with open('secret.py', 'wt') as f:
         f.write("SECRET_KEY = '{}'".format(key))
+
+
+@manager.command
+def create_db():
+    """Create database and its schema. Add post states 'draft' and 'published'"""
+    db.create_all()
+
+    from models import PostState
+    PostState.query.delete()
+    db.session.add(PostState('draft'))
+    db.session.add(PostState('published'))
+    db.session.commit()
+
+    print('Database schema and, "draft" and "published" blog post states have been created. '
+          'You can use populate_db command to populate it with the first post and an example draft post. '
+          'Also the create_user command to create admin users who can write blog posts.')
+
+
+@manager.option('--email', help='email of the user')
+@manager.option('--password', help='password of the user')
+@manager.option('--fullname', help='fullname of the user')
+@manager.option('--timezone', help='timezone of user as integer N in UTC+N', type=int)
+def create_user(email, password, fullname, timezone):
+    """Insert a new PersonalWebApp User into database."""
+    user = User(email, password, fullname, timezone)
+    db.session.add(user)
+    db.session.commit()
+    print('New user with email address "{}" has been generated'.format(email))
 
 
 FIRST_POST = '''
@@ -59,43 +70,34 @@ Later I'll go into the details of how different parts are implemented. For now y
 Hope I'll have enough patience and persistence to write continuously. Laylay...
 '''
 
+
 @manager.command
 def populate_db():
-    from models import PostState
-    PostState.query.delete()
-    db.session.add(PostState('draft'))
-    db.session.add(PostState('published'))
-    db.session.commit()
-
+    """Add 'personalwebapp' tag, first post to database."""
     from models import Post, Tag, post_to_tag
     Post.query.delete()
     Tag.query.delete()
     db.session.execute(post_to_tag.delete())
 
-    python, politics, programming, turkish = [Tag(tname) for tname in ['python', 'politics', 'programming', 'turkish']]
-    for tag in [python, politics, programming, turkish]:
-        db.session.add(tag)
+    personalwebapp = Tag(name='personalwebapp')
+    db.session.add(personalwebapp)
 
-    post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=2)
-    post.tags.append(python)
-    post.tags.append(programming)
+    post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=1)
+    post.tags.append(personalwebapp)
     post.state_id = 2
+    from datetime import datetime
+    post.published_at = datetime.utcnow()
     post.url = 'hello_personal_webapp'
     db.session.add(post)
 
-    post = Post(title='Highlights From This Week', content='This week was so busy.', author_id=2)
-    post.tags.append(python)
-    post.tags.append(politics)
-    post.url = 'highlights_from_this_week'
+    post = Post(title='Example Draft Post', content='This is the first draft. I\'ll finish it later.', author_id=1)
+    post.url = 'example_draft_post'
     db.session.add(post)
 
     db.session.commit()
 
-    from models import User
-    User.query.delete()
-    user = User('admin@email.com', 'password', 'Ad Min')
-    db.session.add(user)
-    db.session.commit()
+    print('"personalwebapp" tag'
+          'and "Hello PersonalWebApp!" published post and "Example Draft Post" draft post have been generated.')
 
 
 if __name__ == '__main__':
