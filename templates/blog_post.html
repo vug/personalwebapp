@@ -11,7 +11,7 @@
 <div class="panel">
     <div class="content">
         <h2>{{ post.title }}</h2>
-        {{ post.render_content() }}
+        {{ post.content | markdown}}
     <small>
         {% if post.published_at %}published at: {{ (post.published_at + tz_diff).strftime('%Y-%m-%d %H:%M') }}{% endif %}
         {% if post.edited_at %} edited at: {{ (post.edited_at + tz_diff).strftime('%Y-%m-%d %H:%M') }}{% endif %}
