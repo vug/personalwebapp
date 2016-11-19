@@ -1,7 +1,7 @@
 """
 This Blueprint implements Blog related views.
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import Blueprint, render_template, abort, request, redirect, flash
 from flask_login import login_required, current_user
@@ -29,9 +29,10 @@ def blog_index():
 def blog_post(post_url):
     """Render post of given url."""
     post = Post.query.filter_by(url=post_url).first()
+    timezone_diff = timedelta(hours=post.timezone)
     if post is None:
         abort(404)
-    return render_template('blog_post.html', post=post)
+    return render_template('blog_post.html', post=post, tz_diff=timezone_diff)
 
 
 @blog.route('/new')
