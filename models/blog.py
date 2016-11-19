@@ -13,8 +13,12 @@ post_to_tag = db.Table('post_to_tag',
 class Post(db.Model):
 
     def render_markdown(markdown_text):
-        """Render markdown_text into HTML with code blocks and math rendering."""
-        html = markdown(markdown_text, fenced_code=True, math=True)
+        """Render markdown_text into HTML with code blocks and math rendering.
+
+        Note that, unfortunately, Flask-Misaka looks outdated compared to Misaka. The `make_flag` in `flask_misaka.py`
+        is generating extension information using deprecated way (via integers) which leads to a warning on Misaka side
+        at `misaka.utils` `args_to_int` function."""
+        html = markdown(markdown_text, fenced_code=True)
         return html
 
     id = db.Column(db.Integer, primary_key=True)
