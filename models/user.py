@@ -1,3 +1,6 @@
+"""
+PersonalWebApp user database model, who are also authors of blog posts.
+"""
 from datetime import datetime
 
 from extensions import db
