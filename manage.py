@@ -74,6 +74,7 @@ Hope I'll have enough patience and persistence to write continuously. Laylay...
 @manager.command
 def populate_db():
     """Add 'personalwebapp' tag, first post to database."""
+    from datetime import datetime
     from models import Post, Tag, post_to_tag
     Post.query.delete()
     Tag.query.delete()
@@ -85,7 +86,6 @@ def populate_db():
     post = Post(title='Hello PersonalWebApp!', content=FIRST_POST, author_id=1, timezone=-5)
     post.tags.append(personalwebapp)
     post.state_id = 2
-    from datetime import datetime
     post.published_at = datetime.utcnow()
     post.url = 'hello_personal_webapp'
     db.session.add(post)
