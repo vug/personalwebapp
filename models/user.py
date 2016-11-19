@@ -13,7 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(80))
     fullname = db.Column(db.String(80), unique=True)
-    created_at = db.Column('created_at', db.DateTime)
+    created_at = db.Column(db.DateTime)
     timezone = db.Column(db.Integer, default=0)
 
     def __init__(self, email, password, fullname, timezone):
