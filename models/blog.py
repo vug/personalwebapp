@@ -26,16 +26,18 @@ class Post(db.Model):
     published_at = db.Column(db.DateTime)
     edited_at = db.Column(db.DateTime)
     view_count = db.Column(db.Integer, default=0)
+    timezone = db.Column(db.Integer, default=0)
     state_id = db.Column(db.Integer, db.ForeignKey('post_state.id'))
     tags = db.relationship('Tag', secondary=post_to_tag, backref=db.backref('posts', lazy='dynamic'))
 
-    def __init__(self, title, content, author_id):
+    def __init__(self, title, content, author_id, timezone):
         self.title = title
         self.url = 'random_url_' + generate_random_string()
         self.content = content
         self.author_id = author_id
         self.created_at = datetime.utcnow()
         self.state_id = 1
+        self.timezone = timezone
 
     def render_content(self):
         """Render the content of the post written in markdown to HTML.
