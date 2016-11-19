@@ -49,6 +49,9 @@ I found this as an opportunity (or excuse) to write my own blogging software. At
 
 Writing your own web app just to publish a few blog posts is super unnecessary and looks counter-productive. There are content management systems such as [Wordpress](https://wordpress.org/), [PageKit](https://pagekit.com/) which do the job perfectly. But, I am a theoretical physicist. We are one of the most impractical kind of people out there. I'm totally not surprised with my decision.
 
+<blockquote width="300px" class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">It&#39;s basically a rite of passage <a href="https://t.co/sP2x1czQBK">pic.twitter.com/sP2x1czQBK</a></p>&mdash; The Practical Dev (@ThePracticalDev) <a href="https://twitter.com/ThePracticalDev/status/799634252946087936">November 18, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 I rented an [EC2](https://aws.amazon.com/ec2/) instance on AWS and there I am running a [Flask](http://flask.pocoo.org/) web application.  It doesn't help much about the static parts of the website (about, music etc. sections), actually it makes it harder to serve them. :-) But allows me to dynamically write, store, edit blog posts.
 
 Later I'll go into the details of how different parts are implemented. For now you can just check the source code of the website on its [GitHub repository](https://github.com/vug/personalwebapp).
