@@ -14,12 +14,14 @@ class User(db.Model):
     password = db.Column(db.String(80))
     fullname = db.Column(db.String(80), unique=True)
     created_at = db.Column('created_at', db.DateTime)
+    timezone = db.Column(db.Integer, default=0)
 
-    def __init__(self, email, password, fullname):
+    def __init__(self, email, password, fullname, timezone):
         self.email = email
         self.password = password
         self.fullname = fullname
         self.created_at = datetime.utcnow()
+        self.timezone = timezone
 
     def is_authenticated(self):
         """Return True to indicate that the user provided valid credentials."""
