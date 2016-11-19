@@ -95,7 +95,7 @@ def delete_post(post_id):
 def preview_post():
     """View to return rendered marked into html to be used via an async request."""
     markdown_text = request.form.get('markdown', '')
-    html = Post.render_markdown(markdown_text)
+    html = render_template('blog_preview.html', content=markdown_text)
     return html
 
 
