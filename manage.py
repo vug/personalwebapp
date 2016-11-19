@@ -90,7 +90,8 @@ def populate_db():
     post.url = 'hello_personal_webapp'
     db.session.add(post)
 
-    post = Post(title='Example Draft Post', content='This is the first draft. I\'ll finish it later.', author_id=1)
+    post = Post(title='Example Draft Post', content='This is the first draft. I\'ll finish it later.',
+                author_id=1, timezone=-5)
     post.url = 'example_draft_post'
     db.session.add(post)
 
