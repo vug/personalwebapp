@@ -133,6 +133,9 @@ class TestBlogPosts(TestBase):
         assert '/blog/edit/1' not in html
 
     def test_preview(self):
+        """Looks like Flask-Misaka is outdated compared to Misaka. The `make_flag` in `flask_misaka.py` is generating
+        extension information using deprecated way (via integers) which leads to a warning on Misaka side at
+        `misaka.utils` `args_to_int` function."""
         self.create_tags_posts()
         self.login()
         rv = self.app.post('/blog/preview', data={'markdown': '[a link](http://www.example.com)'})
