@@ -29,9 +29,9 @@ def blog_index():
 def blog_post(post_url):
     """Render post of given url."""
     post = Post.query.filter_by(url=post_url).first()
-    timezone_diff = timedelta(hours=post.timezone)
     if post is None:
         abort(404)
+    timezone_diff = timedelta(hours=post.timezone)
     return render_template('blog_post.html', post=post, tz_diff=timezone_diff)
 
 

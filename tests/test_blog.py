@@ -6,9 +6,9 @@ from models import Post, Tag
 
 class TestBlogPosts(TestBase):
     def create_tags_posts(self):
-        post1 = Post(title='title one', content='content one', author_id=1)
-        post2 = Post(title='title two', content='content two', author_id=1)
-        post3 = Post(title='title three', content='content three', author_id=1)
+        post1 = Post(title='title one', content='content one', author_id=1, timezone=0)
+        post2 = Post(title='title two', content='content two', author_id=1, timezone=0)
+        post3 = Post(title='title three', content='content three', author_id=1, timezone=0)
         post1.url = 'post_one'
         post1.state_id = 2
         post2.url = 'post_two'

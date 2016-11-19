@@ -18,7 +18,7 @@ class TestBase(unittest.TestCase):
 
         with app.app_context():
             db.create_all()
-            self.test_user = User(self.test_user_email, self.test_user_password, 'Mr. Tester')
+            self.test_user = User(self.test_user_email, self.test_user_password, 'Mr. Tester', timezone=-5)
             db.session.add(self.test_user)
             db.session.add(PostState(name='draft'))
             db.session.add(PostState(name='published'))
