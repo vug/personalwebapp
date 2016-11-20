@@ -35,3 +35,10 @@ def access_pattern():
     cmd = 'dot /home/ubuntu/personalwebapp/instance/graph.dot -Tpng > /home/ubuntu/personalwebapp/instance/access_pattern.png'
     subprocess.call(cmd, shell=True)
     return send_file('instance/access_pattern.png')
+
+
+@simple_routes.route('/dump_database')
+@login_required
+def dump_database():
+    """Serve app.db file for backup."""
+    return send_file('app.db', as_attachment=True)
