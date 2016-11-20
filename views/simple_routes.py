@@ -24,3 +24,14 @@ def log_report():
     cmd = 'goaccess -f /home/ubuntu/personalwebapp/logs/nginx/access.log -a -o /home/ubuntu/personalwebapp/instance/report.html'
     subprocess.call(cmd, shell=True)
     return send_file('instance/report.html')
+
+
+@simple_routes.route('/access_pattern')
+@login_required
+def access_pattern():
+    """Generate access pattern using Visitors."""
+    cmd = '/home/ubuntu//visitors_0.7/visitors /home/ubuntu/personalwebapp/logs/nginx/access.log --prefix 66.65.39.198 --graphviz > /home/ubuntu/personalwebapp/instance/graph.dot'
+    subprocess.call(cmd, shell=True)
+    cmd = 'dot /home/ubuntu/personalwebapp/instance/graph.dot -Tpng > /home/ubuntu/personalwebapp/instance/access_pattern.png'
+    subprocess.call(cmd, shell=True)
+    return send_file('instance/access_pattern.png')
