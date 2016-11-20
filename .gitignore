@@ -1,6 +1,7 @@
 app.db
 secret.py
-
+instance
+logs
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
