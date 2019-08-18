@@ -24,4 +24,4 @@ def static_page(name):
 
 @static_pages.route('/')
 def index():
-    return render_template('home.html', bg_color=rnd_clr())
+    return render_template('about.html', bg_color=rnd_clr())

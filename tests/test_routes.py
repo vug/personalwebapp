@@ -8,7 +8,7 @@ from models import User
 class TestRoutes(TestBase):
     def test_can_access_static_pages(self):
         rv = self.app.get('/')
-        assert b'home_page' in rv.data
+        assert b'about_page' in rv.data
 
         rv = self.app.get('/about.html')
         assert b'about_page' in rv.data
