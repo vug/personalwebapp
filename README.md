@@ -5,7 +5,7 @@
 
 ## Anaconda
 
-- Create a new virtual `conda create --name personalwebapp python=3.5`
+- Create a new virtual `conda create --name personalwebapp python=3.5` (or whatever the latest version is, say 3.7)
 - Activate environment. Windows: `activate personalwebapp`, OSX: `source activate personalwebapp`
 - Deactive environment. Windows: `deactivate personalwebapp`, OSX: `source deactivate personalwebapp`
 
