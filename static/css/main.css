@@ -39,7 +39,9 @@ h1, h2, h3 {
     margin: 0;
 }
 
-code {
+/* TODO: Use pre:has(> code) when CSS4 selector becomes available
+   See: https://developer.mozilla.org/en-US/docs/Web/CSS/:has */
+pre {
 	background-color: aliceblue;
 }
 
