@@ -60,7 +60,10 @@ class BlogEditForm(FlaskForm):
 def edit_post(post_id):
     """GET shows post's content in a BlogEditForm. Post gets entered information via the Form into post and save."""
     post = Post.query.filter_by(id=post_id).first()
-    form = BlogEditForm(request.form, post)
+    # TODO: remove comments
+    # form = BlogEditForm(request.form, post)
+    # form = BlogEditForm(request.form, title=post.title, content=post.content)
+    form = BlogEditForm(request.form, **post.__dict__)
     if request.method == 'POST' and form.validate_on_submit():
         form_state = PostState.query.filter_by(id=int(request.form.get('state'))).first()
         is_published = post.state.name == 'draft' and form_state.name == 'published'
